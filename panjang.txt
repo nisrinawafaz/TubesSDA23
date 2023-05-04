@@ -1,0 +1,36 @@
+Halo, disini kami akan menjelaskan mengenai satuan panjang. Dalam keseharian, pasti kita sering kali melakukan pengukuran panjang, mengukur jarak, ketebalan, dan masih banyak lagi. Biasanya, dalam pengukuran ini kita menggunakan satuan panjang. Nah, terus apa itu satuan panjang? Satuan panjang adalah konversi yang digunakan dalam menentukan panjang. Satuan panjang digunakan untuk mengidentifikasi ukuran suatu benda atau jarak dari titik awal ke titik akhir. Menurut Satuan Internasional (SI), standar satuan panjang adalah meter (m). Dalam materi ini, akan dijelaskan satu persatu beserta cara menghitungnya ya! Mohon dibaca baik-baik :)
+
+	Satuan panjang memiliki tangga konversi yang digunakan untuk memudahkan dalam perhitungannya. Urutan konversi satuan panjang yaitu sebagai berikut.
+--> km (kilometer) 
+--> hm (hektometer) 
+--> dam (dekameter) 
+--> m (meter) dm (desimeter) 
+--> cm (centimeter) 
+--> mm (milimeter)
+
+Nah untuk perhitungan tangga konversi seperti di atas, sebagai berikut.
+~ Jika kita menaikkan setiap satu anak tangga pada tangga konversi, maka nilainya dibagi dengan 10. 
+~ Jika kita menurunkan setiap satu anak tangga pada tangga konversi, maka nilainya dikalikan dengan 10.
+
+Dari tangga konversi satuan panjang di atas, maka diperoleh pembacaan sebagai berikut. 
+1 km = 10 hm 
+1 km = 100 dam 
+1 km = 1000 m 
+1 km = 10000 dm 
+1 km = 100000 cm 
+1 km = 1000000 mm 
+1 m = 0,001 km 
+1 m = 0,01 hm 
+1 m = 0,1 dam 
+1 m = 10 dm 
+1 m = 100 cm 
+1 m = 1000 mm
+
+
+				     <---- Nah kalian bisa juga lho, latihan mengenai konversi ini pada bagian "Quiz" yaa! >.< ---->
+
+AAAAAAAAAAAAACCCCCEEEEEFFFFFFFFGGGGKKKKLLLOOOOPPPPPPPRRRRTTTTTTVVVVVWWWWXXXXYYYYYZZxxx24523249492347234567890223
+Dalam sebuah keyboard, terdapat banyak karakter yang dapat digunakan untuk mengetik teks dan mengontrol perangkat lunak. Karakter tersebut meliputi huruf besar dan kecil, angka, simbol, tanda baca, dan karakter khusus. Beberapa contoh karakter tersebut adalah Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Z, X, C, V, B, N, M, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ~, !!, @@@@@, #, $, %, ^, &&&&, *, (, ), _, +, -, =, {, }, |, [, ], \, :, ;, ", ', <, >, ,, dan . Semua karakter tersebut dapat digunakan untuk membuat kata-kata dan kalimat yang beragam, serta digunakan untuk melakukan tindakan tertentu dalam komputer. Keyboard menjadi salah satu perangkat yang sangat penting dalam penggunaan komputer, karena tanpa keyboard, kita tidak dapat mengetik teks dan mengontrol perangkat lunak dengan mudah dan efisien. *^^#@!~_*!+!)(&(%%"|>?<}{{:"<&@~!#>><).,;'\p[=-00-351zzHH//||\\```-
+
+
+
