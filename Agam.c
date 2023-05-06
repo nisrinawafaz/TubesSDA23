@@ -15,7 +15,6 @@ infotype InputCodeBinary(infotype deskripsi)
 	return str;
 }
 
-
 infotype Decode(Link root, infotype str){
 	int i = 0;
 	Link pCur;
@@ -28,9 +27,7 @@ infotype Decode(Link root, infotype str){
 	temp = (infotype) malloc (2 * sizeof(char));
 	temp[0] ='\0';
 	
-	
 	pCur = root;
-	
 	
 	while(str[i] != '\0'){
 		while(RightSon(pCur) != Nil && LeftSon(pCur) != Nil){
@@ -78,60 +75,86 @@ void InputBarang(Link *root){
 		hargabinary = (infotype) malloc (50*sizeof(char));
 		stokbinary = (infotype) malloc (50*sizeof(char));
 	
-    
 		barang = InputCodeChar("\nMasukkan Nama Barang:");
 		barang = sensitiveCase(barang);
 		if(SearchBarang("NamaBarang.txt", barang)){
 			FSearchBarang("NamaBarang.txt", barang, &harga, &stok);
+			
 			printf("\nBerikut adalah Harga dan Stok Barang %s:\n", barang);
 			printf("Harga: %s, Stok: %s\n", harga, stok);
+			
 			printf("Apakah anda ingin mengubah Harga? (Y/N)");
 			fflush(stdin);
 			scanf("%c", &pilihan);
+			
 			if(pilihan == 'Y' || pilihan == 'y'){
 				harga = InputCodeChar("Masukkan Harga Barang Terbaru:");
 				pf = fopen("panjang.txt","a");
-				fprintf(pf,"%s",  harga);
-				fclose(pf);
+				if (!pf){
+					printf("\nFile tidak ditemukan");
+				} else{
+					fprintf(pf,"%s", harga);
+					fclose(pf);
+				}
 			}
+			
 			printf("Apakah anda ingin menambah Stok? (Y/N)");
 			fflush(stdin);
 			scanf("%c", &pilihan1);
+			
 			if(pilihan1 == 'Y' || pilihan1 == 'y'){
 				stokbarang = atoi(stok);
 				stok = InputCodeChar("Masukkan Stok Barang yang ingin ditambahkan:");
+				
 				pf = fopen("panjang.txt","a");
-				fprintf(pf,"%s", stok);
-				fclose(pf);
+				if (!pf){
+					printf("\nFile tidak ditemukan");
+				} else{
+					fprintf(pf,"%s", stok);
+					fclose(pf);
+				}
+				
 				stokbarang1 = atoi(stok);
 				sprintf(stok, "%d", (stokbarang+stokbarang1));
 				
 			}
-			printf("mau gak");
-			*root = CreateHuffmanTree();
-			printf("test");
-			incodeBarang(&barangbinary, &hargabinary, &stokbinary, barang, harga, stok, *root);
-			pf = fopen("BarangBinary.txt","a");
-			fprintf(pf,"%s\t%s\t%s\n", barangbinary, hargabinary, stokbinary);
-			fclose(pf);
+			Replace(barang, harga, stok);
 			
 		}else{
 			harga = InputCodeChar("Masukkan Harga Barang:");
 			stok = InputCodeChar("Masukkan Jumlah Stok Barang:");
+			
 			pf = fopen("NamaBarang.txt","a");
-			fprintf(pf,"%s\t%s\t%s\n",barang,  harga, stok);
-			fclose(pf);
+			if (!pf){
+				printf("\nFile tidak ditemukan");
+			} else{
+				fprintf(pf,"%s\t%s\t%s\n",barang, harga, stok);
+				fclose(pf);
+			}
+			
 			pf = fopen("panjang.txt","a");
-			fprintf(pf,"%s\t%s\t%s",barang,  harga, stok);
-			fclose(pf);
+			if (!pf){
+				printf("\nFile tidak ditemukan");
+			} else{
+				fprintf(pf,"%s\t%s\t%s",barang, harga, stok);
+				fclose(pf);
+			}
+			
 			*root = CreateHuffmanTree();
-			// ubah kebiner buat replace
+			incodeBarang(&barangbinary, &hargabinary, &stokbinary, barang, harga, stok, *root);
+			
+			pf = fopen("BarangBinary.txt","a");
+			if (!pf){
+				printf("\nFile tidak ditemukan");
+			} else{
+				fprintf(pf,"%s\t%s\t%s\n", barangbinary, hargabinary, stokbinary);
+				fclose(pf);
+			}
+			
 		}
 		printf ("\n\nApakah anda ingin menginputkan barang lagi? (y/t)");
-		lagi = getche ();
-		
+		lagi = getche ();	
 	}
-	
 }
 
 double UangKembalian(double totalHarga){
@@ -153,17 +176,11 @@ double UangKembalian(double totalHarga){
 	return UangKembali;
 }
 
-
 void tampilanKembalian(double Uangkembalian){
-	
 	printf	("\t\t\t\t\t\t\t\t\t  Kembalian :                       Rp. %g \n",Uangkembalian);
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
 	puts	("\t\t\t\t\t\t\t\t\t|             TERIMA KASIH, SUDAH BERBELANJA                  |");
 	puts	("\t\t\t\t\t\t\t\t\t|              SELAMAT BERBELANJA KEMBALI :)                  |");
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
-	
 }
-
-
-
 

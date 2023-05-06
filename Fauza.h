@@ -25,7 +25,7 @@ bool SearchBarang(infotype NmFile, infotype NmBarang);
 
 void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok);
 
-void Replace(Link root, infotype namabrg, infotype hargabaru, infotype stokbaru);
+void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru);
 
 void InsertLastBrg (address2 *head, address2 *tail, address2 Q);
 

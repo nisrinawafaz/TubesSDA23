@@ -200,8 +200,10 @@ bool SearchBarang(infotype NmFile, infotype NmBarang){
 			nama = (infotype) malloc (50*sizeof(char));
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
+			
         	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, harga, stok);
 			fflush(stdin);
+			
         	if (strcmp(NmBarang, nama) == 0){
 	          	ketemu = true;
 			}
@@ -224,8 +226,10 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
 			nama = (infotype) malloc (50*sizeof(char));
 			*Harga = (infotype) malloc (50*sizeof(char));
 			*Stok = (infotype) malloc (50*sizeof(char));
+			
         	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, *Harga, *Stok);
 			fflush(stdin);
+			
         	if (strcmp(NmBarang, nama) == 0){
 				break;
 			}
@@ -234,14 +238,14 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
     }
 }
 
-void Replace(Link root, infotype namabrg, infotype hargabaru, infotype stokbaru)
+void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
 {
 	FILE *in;
 	bool ketemu = false;
 	infotype nama, harga, stok;
 	address2 front = Nil, rear = Nil, temp = Nil;
 	
-	in = fopen("BarangBinary.txt","r");
+	in = fopen("NamaBarang.txt","r");
     if(!in){  
        printf("\nFile tidak ditemukan");
     }else{
@@ -249,8 +253,10 @@ void Replace(Link root, infotype namabrg, infotype hargabaru, infotype stokbaru)
 			nama = (infotype) malloc (50*sizeof(char));
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
+			
         	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, harga, stok);
 			fflush(stdin);
+			
         	InsVLastBrg(&front, &rear, nama, harga, stok);
        }
        fclose(in);
@@ -265,33 +271,13 @@ void Replace(Link root, infotype namabrg, infotype hargabaru, infotype stokbaru)
 		Stok(temp) = stokbaru;
 	}
 	
-	temp = front;
-	
-	in = fopen("BarangBinary.txt", "w");
+	in = fopen("NamaBarang.txt", "w");
 	if(!in){  
        printf("\nFile tidak ditemukan");
     }else{
        while(front != Nil && !ketemu){
         	fprintf(in,"%s\t%s\t%s\n", NamaBrg(front), Harga(front), Stok(front));
-			front = Next(front);
-       }
-       fclose(in);
-    }
-    
-    in = fopen("NamaBarang.txt", "w");
-	if(!in){  
-       printf("\nFile tidak ditemukan");
-    }else{
-       while(temp != Nil && !ketemu){
-			nama = (infotype) malloc (50*sizeof(char));
-			harga = (infotype) malloc (50*sizeof(char));
-			stok = (infotype) malloc (50*sizeof(char));
-			DelFirstBrg (&temp, &nama, &harga, &stok);
-			nama = Decode(root, nama);
-			harga = Decode(root, harga);
-			stok = Decode(root, stok);
-        	fprintf(in,"%s\t%s\t%s\n", nama, harga, stok);
-			fflush(stdin);
+			DelFirstBrg (&front, &nama, &harga, &stok);
        }
        fclose(in);
     }
