@@ -13,7 +13,7 @@ void selection(int *choice, infotype fChoice, infotype sChoice, infotype pertany
 
 void inputLogin(infotype *username, infotype *password);
 
-void adminFitur(Link root);
+void adminFitur(Link *root);
 
 void pemesanan(stroller *front, stroller *rear, Link root);
 
@@ -77,6 +77,10 @@ infotype InputCodeChar(infotype deskripsi);
 void SearchTree(Link root, char x, Link *temp2);
 
 infotype Incode(Link root, infotype KodeChar);
+
+Link CreateHuffmanTree();
+
+void  incodeBarang(infotype *barangbinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype harga, infotype stok, Link root);
 
 
 #endif

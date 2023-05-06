@@ -11,7 +11,7 @@
 
 infotype InputCodeBinary(infotype deskripsi);
 infotype Decode(Link root, infotype str);
-void InputBarang(Link root);
+void InputBarang(Link *root);
 infotype sensitiveCase(infotype kata);
 double UangKembalian(double totalHarga);
 void tampilanKembalian(double Uangkembalian);

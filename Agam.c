@@ -62,11 +62,13 @@ infotype sensitiveCase(infotype kata){
 	return kata;
 }
 
-void InputBarang(Link root){
+void InputBarang(Link *root){
 	FILE *pf;
+	FILE *in;
 	infotype barang, harga, stok, barangbinary, hargabinary, stokbinary, penampung;
 	char pilihan, pilihan1, lagi = 'y';
 	int stokbarang, stokbarang1;
+	
 	
 	while (lagi == 'y' || lagi =='Y'){
 		barang = (infotype) malloc (50*sizeof(char));
@@ -76,28 +78,21 @@ void InputBarang(Link root){
 		hargabinary = (infotype) malloc (50*sizeof(char));
 		stokbinary = (infotype) malloc (50*sizeof(char));
 	
-	
-		if (pf == NULL){
-			printf("File gagal dibuka.");
-	    	exit(1);
-		}
-	
+    
 		barang = InputCodeChar("\nMasukkan Nama Barang:");
-		sensitiveCase(barang);
-		barangbinary = Incode(root, barang);
-		if(SearchBarang("BarangBinary.txt", barangbinary)){
-			FSearchBarang("BarangBinary.txt", barangbinary, &hargabinary, &stokbinary);
-			barang = Decode(root, barangbinary);
+		barang = sensitiveCase(barang);
+		if(SearchBarang("NamaBarang.txt", barang)){
+			FSearchBarang("NamaBarang.txt", barang, &harga, &stok);
 			printf("\nBerikut adalah Harga dan Stok Barang %s:\n", barang);
-			harga = Decode(root, hargabinary);
-			stok = Decode(root, stokbinary);
 			printf("Harga: %s, Stok: %s\n", harga, stok);
 			printf("Apakah anda ingin mengubah Harga? (Y/N)");
 			fflush(stdin);
 			scanf("%c", &pilihan);
 			if(pilihan == 'Y' || pilihan == 'y'){
 				harga = InputCodeChar("Masukkan Harga Barang Terbaru:");
-				hargabinary = Incode(root, harga);
+				pf = fopen("panjang.txt","a");
+				fprintf(pf,"%s",  harga);
+				fclose(pf);
 			}
 			printf("Apakah anda ingin menambah Stok? (Y/N)");
 			fflush(stdin);
@@ -105,28 +100,36 @@ void InputBarang(Link root){
 			if(pilihan1 == 'Y' || pilihan1 == 'y'){
 				stokbarang = atoi(stok);
 				stok = InputCodeChar("Masukkan Stok Barang yang ingin ditambahkan:");
+				pf = fopen("panjang.txt","a");
+				fprintf(pf,"%s", stok);
+				fclose(pf);
 				stokbarang1 = atoi(stok);
 				sprintf(stok, "%d", (stokbarang+stokbarang1));
-				stokbinary = Incode(root, stok);
+				
 			}
-			if(pilihan == 'Y' || pilihan == 'y' || pilihan1 == 'Y' || pilihan1 == 'y'){
-				Replace(root, barangbinary, hargabinary, stokbinary);
-			}
-			
-		}else{
-			harga = InputCodeChar("Masukkan Harga Barang:");
-			hargabinary = Incode(root, harga);
-			stok = InputCodeChar("Masukkan Jumlah Stok Barang:");
-			stokbinary = Incode(root, stok);
-			pf = fopen("NamaBarang.txt","a");
-			fprintf(pf,"%s\t%s\t%s\n", barang, harga, stok);
-			fclose(pf);
+			printf("mau gak");
+			*root = CreateHuffmanTree();
+			printf("test");
+			incodeBarang(&barangbinary, &hargabinary, &stokbinary, barang, harga, stok, *root);
 			pf = fopen("BarangBinary.txt","a");
 			fprintf(pf,"%s\t%s\t%s\n", barangbinary, hargabinary, stokbinary);
 			fclose(pf);
+			
+		}else{
+			harga = InputCodeChar("Masukkan Harga Barang:");
+			stok = InputCodeChar("Masukkan Jumlah Stok Barang:");
+			pf = fopen("NamaBarang.txt","a");
+			fprintf(pf,"%s\t%s\t%s\n",barang,  harga, stok);
+			fclose(pf);
+			pf = fopen("panjang.txt","a");
+			fprintf(pf,"%s\t%s\t%s",barang,  harga, stok);
+			fclose(pf);
+			*root = CreateHuffmanTree();
+			// ubah kebiner buat replace
 		}
 		printf ("\n\nApakah anda ingin menginputkan barang lagi? (y/t)");
 		lagi = getche ();
+		
 	}
 	
 }

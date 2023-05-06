@@ -77,7 +77,7 @@ void inputLogin(infotype *username, infotype *password)
 	scanf("%s", *password);
 }
 
-void adminFitur(Link root)
+void adminFitur(Link *root)
 {
 	bool valid;
 	int fitur;
@@ -105,8 +105,8 @@ void adminFitur(Link root)
 	
 	do
 	{
-		inputLogin(&username, &password);
-		valid = loginAdmin(username,password);
+		//inputLogin(&username, &password);
+		valid = 1;//loginAdmin(username,password);
 		if(valid)
 		{
 			printf("login berhasil");
@@ -114,13 +114,14 @@ void adminFitur(Link root)
 			do
 			{
 				selection(&fitur, "Input Barang Baru", "Kasir", "Fitur admin : ", "saya akan menggunakan fitur : ");
+				printf("fitur %d", fitur);
 				if(fitur == 1)
 				{
 					InputBarang(root);
 				}
 				else if(fitur == 2)
 				{
-					pemesanan(&front, &rear, root);
+					pemesanan(&front, &rear, *root);
 					input_struk(front);
 					system("cls");
 					PrintInfokeranjang (front);
@@ -619,6 +620,7 @@ address createFrekuensi()
     
     front = NULL;
     rear = NULL;
+    printf("hai");
  
     in = fopen("panjang.txt", "r");
     if (in == NULL)
@@ -626,6 +628,8 @@ address createFrekuensi()
         printf("Cannot open source file.\n");
         exit(1);
     }
+    
+    
     out = fopen("output.txt", "w");
     if (out == NULL)
     {
@@ -633,8 +637,6 @@ address createFrekuensi()
         exit(1);
     }
     
-    
- 
     do {
         ch = getc(in);
         tempAdd = Search (front, ch);
@@ -707,6 +709,34 @@ void sortingFreq(address *front)
         }
     }
 	
+}
+
+Link CreateHuffmanTree()
+{
+	Link root;
+	root = Nil;
+	
+	address front;
+	front = Nil;
+	
+	address1 leafref;
+	leafref = Nil;
+	
+	front = createFrekuensi();
+	sortingFreq(&front);
+			
+	leafref = CreateListOfLeaf(front);
+			
+	root = CreateTree (leafref);
+	
+	return root;
+}
+
+void  incodeBarang(infotype *barangbinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype harga, infotype stok, Link root)
+{
+	*barangbinary = Incode(root, barang);
+	*hargabinary = Incode(root, harga);
+	*stokbinary = Incode(root, stok);
 }
 
 void PrintInfoChar (address data)

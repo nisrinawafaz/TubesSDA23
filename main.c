@@ -7,7 +7,6 @@
 int main()
 {
 	address front, P;
-	address1 leafref;
 	Link root;
 	int role;
 	infotype KodeChar;
@@ -16,16 +15,7 @@ int main()
 	infotype KodeBinary;
 	KodeBinary = (infotype)malloc(30*sizeof(char));
 	
-	front = Nil;
 	KodeChar = Nil;
-	
-	//pembuatan huffman tree
-	front = createFrekuensi();
-	sortingFreq(&front);
-	
-	leafref = CreateListOfLeaf(front);
-	
-	root = CreateTree (leafref);
 	
 	//market
 	//selamat_datang();
@@ -40,7 +30,7 @@ int main()
 		}
 		else if(role == 2)
 		{
-			adminFitur(root);
+			adminFitur(&root);
 		}
 		else
 		{
