@@ -3,6 +3,48 @@
 
 #include "header.h" 
 
+bool loginAdmin(infotype username, infotype password);
+
+void selamat_datang();
+
+void loading(char x[100]);
+
+void selection(int *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan);
+
+void inputLogin(infotype *username, infotype *password);
+
+void adminFitur(Link root);
+
+void pemesanan(stroller *front, stroller *rear, Link root);
+
+void input_struk(stroller data);
+
+stroller AlokasiKeranjang(infotype barang, int harga, int kuantitas, int total);
+
+stroller SearchKeranjang (stroller front, infotype barang);
+
+void InsertLastKeranjang (stroller *front, stroller *rear, stroller P);
+
+void InsVLastKeranjang(stroller *front, stroller *rear, infotype barang, int harga, int kuantitas, int total);
+
+void PrintInfokeranjang (stroller data);
+
+void DelKeranjang (stroller *front, infotype nama);
+
+void DeAlokasi (stroller P);
+
+void header_struk();
+
+double hitung_diskon(int total, double potongan);
+
+double hitung_hasil(int total, double potongan, int minimal, double ppn);
+
+void output_bayar(int total, int minimal, double ppn, double diskon, double hasil);
+
+int total_harga(stroller front);
+
+double hitung_ppn(int total, double ppn);
+
 stroller SearchKeranjang (stroller front, infotype barang);
 
 double hitung_diskon(int total, double potongan);
