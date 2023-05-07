@@ -80,7 +80,7 @@ infotype Incode(Link root, infotype KodeChar);
 
 Link CreateHuffmanTree();
 
-void  incodeBarang(infotype *barangbinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype harga, infotype stok, Link root);
+void  incodeBarang(infotype *barangbinary, infotype *sizebinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype size, infotype harga, infotype stok, Link root);
 
 
 #endif

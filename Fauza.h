@@ -23,18 +23,28 @@ void CekHarga(Link root);
 
 bool SearchBarang(infotype NmFile, infotype NmBarang);
 
-void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok);
+bool SearchSize (infotype NmFile, infotype NmBarang, infotype Size);
+
+void FSearchBarang(infotype NmFile, infotype *kode, infotype NmBarang, infotype size, infotype *Harga, infotype *Stok);
+
+void FSearchKode(infotype NmFile, infotype *kode, infotype NmBarang);
+
+void FSearchKodeBinary(infotype NmFile, infotype Kode, infotype *kodebinary);
 
 void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru);
 
 void InsertLastBrg (address2 *head, address2 *tail, address2 Q);
 
-void InsVLastBrg(address2 *front, address2 *rear, infotype X, infotype Y, infotype Z);
+void InsVLastBrg(address2 *front, address2 *rear,infotype U, infotype V, infotype X, infotype Y, infotype Z);
 
-address2 CreateNodeBrg(infotype nmbrg, infotype harga, infotype stok);
+address2 CreateNodeBrg(infotype kode,infotype nmbrg, infotype size, infotype harga, infotype stok);
 
 address2 SearchNodeBrg (address2 front, infotype X);
 
-void DelFirstBrg (address2 *front, infotype *nmbrg, infotype *harga, infotype *stok);
+void DelFirstBrg (address2 *front, infotype *kode, infotype *nmbrg, infotype *size, infotype *harga, infotype *stok);
+
+infotype BuatKodeBarang (infotype NamaBarang);
+
+void InputFileKodeBarang (infotype KodeBarang, infotype BinaryKodeBarang);
 
 #endif

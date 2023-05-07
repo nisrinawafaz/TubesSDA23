@@ -20,7 +20,7 @@ int main()
 	//market
 	//selamat_datang();
 	system("cls");
-	loading("\tTUNGGU SEBENTAR...");
+//	loading("\tTUNGGU SEBENTAR...");
 	do
 	{
 		selection(&role, "user", "admin", "Siapakah Anda?", "saya adalah");

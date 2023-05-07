@@ -170,12 +170,12 @@ Link CreateTree (address1 front)
 
 void CekHarga (Link root)
 {
-	infotype barang, harga, stok;
+	infotype kode, barang, size, harga, stok;
 	
 	barang = InputCodeBinary("\n--> Masukkan kode barang: ");
 	
 	if (SearchBarang("BarangBinary.txt", barang)){
-    	FSearchBarang("BarangBinary.txt", barang, &harga, &stok);
+    	FSearchBarang("BarangBinary.txt", &kode, barang, size, &harga, &stok);
     	barang = Decode(root, barang);
     	printf ("\nNama barang: %s", barang);
     	harga = Decode(root, harga);
@@ -187,21 +187,29 @@ void CekHarga (Link root)
 	}
 }
 
-bool SearchBarang(infotype NmFile, infotype NmBarang){
+bool SearchBarang(infotype NmFile, infotype NmBarang)
+{
 	FILE *in;
 	bool ketemu = false;
-	infotype nama, harga, stok;
+	infotype nama, harga, stok, kode, size;
 	
 	in = fopen(NmFile,"r");
     if(!in){  
-       printf("\nFile tidak ditemukan");
+       	in = fopen(NmFile,"a");
+	    if(!in){  
+	       printf("\nFile tidak ditemukan");
+	    }else{
+	       fclose(in);
+	    }
     }else{
        while(!feof(in) && !ketemu){
+			kode = (infotype) malloc (50*sizeof(char));
 			nama = (infotype) malloc (50*sizeof(char));
+			size = (infotype) malloc (50*sizeof(char));
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
 			
-        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, harga, stok);
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", kode, nama, size, harga, stok);
 			fflush(stdin);
 			
         	if (strcmp(NmBarang, nama) == 0){
@@ -214,7 +222,44 @@ bool SearchBarang(infotype NmFile, infotype NmBarang){
 	return ketemu;
 }
 
-void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok){
+bool SearchSize (infotype NmFile, infotype NmBarang, infotype Size)
+{
+	FILE *in;
+	bool ketemu = false;
+	infotype nama, harga, stok, kode, size;
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       	in = fopen(NmFile,"a");
+	    if(!in){  
+	       printf("\nFile tidak ditemukan");
+	    }else{
+	       fclose(in);
+	    }
+    }else{
+       while(!feof(in) && !ketemu){
+			kode = (infotype) malloc (50*sizeof(char));
+			nama = (infotype) malloc (50*sizeof(char));
+			size = (infotype) malloc (50*sizeof(char));
+			harga = (infotype) malloc (50*sizeof(char));
+			stok = (infotype) malloc (50*sizeof(char));
+			
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", kode, nama, size, harga, stok);
+			fflush(stdin);
+			
+        	if (strcmp(NmBarang, nama) == 0){
+	          	if (strcmp(Size, size) == 0){
+	          		ketemu = true;
+				}
+			}
+       }
+       fclose(in);
+    }
+    
+	return ketemu;
+}
+
+void FSearchBarang(infotype NmFile, infotype *kode, infotype NmBarang, infotype size, infotype *Harga, infotype *Stok){
 	FILE *in;
 	infotype nama;
 	
@@ -223,14 +268,65 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
        printf("\nFile tidak ditemukan");
     }else{
        while(1){
+			*kode = (infotype) malloc (50*sizeof(char));
 			nama = (infotype) malloc (50*sizeof(char));
+			size = (infotype) malloc (50*sizeof(char));
 			*Harga = (infotype) malloc (50*sizeof(char));
 			*Stok = (infotype) malloc (50*sizeof(char));
 			
-        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, *Harga, *Stok);
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", *kode, nama, size, *Harga, *Stok);
 			fflush(stdin);
 			
         	if (strcmp(NmBarang, nama) == 0){
+				break;
+			}
+       }
+       fclose(in);
+    }
+}
+
+void FSearchKode(infotype NmFile, infotype *kode, infotype NmBarang)
+{
+	FILE *in;
+	infotype nama;
+	infotype size, Harga, Stok;
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(1){
+			*kode = (infotype) malloc (50*sizeof(char));
+			nama = (infotype) malloc (50*sizeof(char));
+			size = (infotype) malloc (50*sizeof(char));
+			Harga = (infotype) malloc (50*sizeof(char));
+			Stok = (infotype) malloc (50*sizeof(char));
+			
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", *kode, nama, size, Harga, Stok);
+			fflush(stdin);
+			
+        	if (strcmp(NmBarang, nama) == 0){
+				break;
+			}
+       }
+       fclose(in);
+    }
+}
+
+void FSearchKodeBinary(infotype NmFile, infotype Kode, infotype *kodebinary)
+{
+	FILE *in;
+	infotype kode;
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(!feof(in)){
+        	fscanf(in,"%[^\t]\t%[^\n]\n", kode, *kodebinary);
+			fflush(stdin);
+			
+        	if (strcmp(Kode, kode) == 0){
 				break;
 			}
        }
@@ -242,7 +338,7 @@ void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
 {
 	FILE *in;
 	bool ketemu = false;
-	infotype nama, harga, stok;
+	infotype nama, harga, stok, kode, size;
 	address2 front = Nil, rear = Nil, temp = Nil;
 	
 	in = fopen("NamaBarang.txt","r");
@@ -250,14 +346,16 @@ void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
        printf("\nFile tidak ditemukan");
     }else{
        while(!feof(in) && !ketemu){
+			kode = (infotype) malloc (50*sizeof(char));
 			nama = (infotype) malloc (50*sizeof(char));
+			size = (infotype) malloc (50*sizeof(char));
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
 			
-        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, harga, stok);
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", kode, nama, size, harga, stok);
 			fflush(stdin);
 			
-        	InsVLastBrg(&front, &rear, nama, harga, stok);
+        	InsVLastBrg(&front, &rear, kode, nama, size, harga, stok);
        }
        fclose(in);
     }
@@ -276,8 +374,8 @@ void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
        printf("\nFile tidak ditemukan");
     }else{
        while(front != Nil && !ketemu){
-        	fprintf(in,"%s\t%s\t%s\n", NamaBrg(front), Harga(front), Stok(front));
-			DelFirstBrg (&front, &nama, &harga, &stok);
+        	fprintf(in,"%s\t%s\t%s\t%s\t%s\n", Kode(front), NamaBrg(front), Size(front), Harga(front), Stok(front));
+			DelFirstBrg (&front, &kode, &nama, &size, &harga, &stok);
        }
        fclose(in);
     }
@@ -300,11 +398,11 @@ void InsertLastBrg (address2 *head, address2 *tail, address2 Q)
 	*tail = Q;
 }
 
-void InsVLastBrg(address2 *front, address2 *rear, infotype X, infotype Y, infotype Z)
+void InsVLastBrg(address2 *front, address2 *rear,infotype U, infotype V, infotype X, infotype Y, infotype Z)
 {
 	address2 P;
 	
-	P = CreateNodeBrg(X, Y, Z);
+	P = CreateNodeBrg(U, V, X, Y, Z);
 	
 	if (P != Nil){	
 		InsertLastBrg (front,rear, P);
@@ -312,14 +410,16 @@ void InsVLastBrg(address2 *front, address2 *rear, infotype X, infotype Y, infoty
 			
 }
 
-address2 CreateNodeBrg(infotype nmbrg, infotype harga, infotype stok)
+address2 CreateNodeBrg(infotype kode, infotype nmbrg, infotype size, infotype harga, infotype stok)
 {
 	address2 P;
 	
 	P = (address2) malloc (sizeof(filecontent));
 	
 	if (P != NULL){		
+		Kode(P) = kode;
 		NamaBrg(P) = nmbrg;
+		Size(P) = size;
 		Harga(P) = harga;
 		Stok(P) = stok;
 		Next(P) = NULL;
@@ -350,17 +450,78 @@ address2 SearchNodeBrg (address2 front, infotype X)
 	return NULL;
 }
 
-void DelFirstBrg (address2 *front, infotype *nmbrg, infotype *harga, infotype *stok)
+void DelFirstBrg (address2 *front, infotype *kode, infotype *nmbrg, infotype *size, infotype *harga, infotype *stok)
 {
 	address2 temp;
 	
 	temp = *front;
 	
+	*kode = Kode(temp);
 	*nmbrg = NamaBrg(temp);
+	*size = Size(temp);
 	*harga = Harga(temp);
 	*stok = Stok(temp);
 	
 	*front = Next(temp);
 	
 	free (temp);
+}
+
+infotype BuatKodeBarang (infotype NamaBarang)
+{
+	infotype kode, binary, KodeBaru, NomorKode;
+	int nomor = 1;
+	FILE *in;
+	
+	in = fopen("KodeBarang.txt","r");
+    if(!in){  
+        in = fopen("KodeBarang.txt","a");
+	    if(!in){  
+	       printf("\nFile tidak ditemukan");
+	    }else{
+	       fclose(in);
+	    }
+    }else{
+       while(!feof(in)){
+			kode = (infotype) malloc (50*sizeof(char));
+			binary = (infotype) malloc (50*sizeof(char));
+			
+        	fscanf(in,"%[^\t]\t%[^\n]\n", kode, binary);
+			fflush(stdin);
+			
+			nomor = nomor + 1;
+       }
+       fclose(in);
+    }
+    
+    KodeBaru = (infotype) malloc (7*sizeof(char));
+    NomorKode = (infotype) malloc (4*sizeof(char));
+    sprintf (NomorKode, "%d", nomor);
+    
+    if (nomor < 10){
+    	KodeBaru[0] = '0';
+    	KodeBaru[1] = '0';
+    	KodeBaru[2] = '\0';
+	} else if (nomor >= 10 && nomor < 100){
+		KodeBaru[0] = '0';
+		KodeBaru[1] = '\0';
+	}
+    
+    strcat (KodeBaru, NomorKode);
+    strncat (KodeBaru, NamaBarang, 2);
+    
+    return KodeBaru;
+}
+
+void InputFileKodeBarang (infotype KodeBarang, infotype BinaryKodeBarang)
+{
+	FILE *in;
+	
+	in = fopen("KodeBarang.txt","a");
+    if(!in){  
+        printf("\nFile tidak ditemukan, input tidak berhasil");
+    }else{
+	    fprintf (in,"%s\t%s\n", KodeBarang, BinaryKodeBarang);
+	    fclose(in);
+    }
 }

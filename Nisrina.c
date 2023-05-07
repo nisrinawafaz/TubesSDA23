@@ -114,7 +114,6 @@ void adminFitur(Link *root)
 			do
 			{
 				selection(&fitur, "Input Barang Baru", "Kasir", "Fitur admin : ", "saya akan menggunakan fitur : ");
-				printf("fitur %d", fitur);
 				if(fitur == 1)
 				{
 					InputBarang(root);
@@ -190,7 +189,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 			search = SearchBarang("BarangBinary.txt", KodeBinaryBarang);
 			if(search)
 			{
-				FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
+//				FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
 				KodeCharBarang = Decode(root, KodeBinaryBarang);
 				KodeCharHarga = Decode(root, KodeBinaryHarga);
 				KodeCharStok = Decode(root, KodeBinaryStok);
@@ -212,7 +211,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 				{
 					InsVLastKeranjang(&(*front), &(*rear), KodeCharBarang, harga, kuantitas, total);
 				}
-				Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
+//				Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
 				PrintInfokeranjang (*front);
 				printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
 				nStep = getche();
@@ -227,7 +226,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 						printf("\n masukkan kuantitas barang : ");
 					scanf("%d", &kuantitas);
 					}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
-					FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
+//					FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
 					KodeCharStok = Decode(root, KodeBinaryStok);
 					stok = atoi(KodeCharStok);
 					stok = stok + kuantitas;
@@ -235,7 +234,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 					sprintf(KodeCharStok, "%d", stok);
 					KodeBinaryStok = (infotype) malloc (30*sizeof(char));
 					KodeBinaryStok = Incode(root, KodeCharStok);
-					Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
+//					Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
 					DelKeranjang (front, KodeCharBarang);
 				}
 				printf("Ketikkan huruf 'T' untuk menambah barang : \n");
@@ -620,7 +619,6 @@ address createFrekuensi()
     
     front = NULL;
     rear = NULL;
-    printf("hai");
  
     in = fopen("panjang.txt", "r");
     if (in == NULL)
@@ -732,9 +730,10 @@ Link CreateHuffmanTree()
 	return root;
 }
 
-void  incodeBarang(infotype *barangbinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype harga, infotype stok, Link root)
+void  incodeBarang(infotype *barangbinary, infotype *sizebinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype size, infotype harga, infotype stok, Link root)
 {
 	*barangbinary = Incode(root, barang);
+	*sizebinary = Incode(root, size);
 	*hargabinary = Incode(root, harga);
 	*stokbinary = Incode(root, stok);
 }
@@ -776,7 +775,7 @@ infotype InputCodeChar(infotype deskripsi)
 	KodeChar = (infotype)malloc(50*sizeof(char));
 	
 	printf("%s", deskripsi);
-	scanf("%s", KodeChar);
+	scanf(" %[^\n]s", KodeChar);
 	
 	return KodeChar;
 }

@@ -20,13 +20,17 @@
 #define Parent(P) (P)->parent
 #define NamaBrg(P) (P)->nmbrg
 #define Stok(P) (P)->stok
+#define Kode(P) (P)->kode
+#define Size(P) (P)->size
 
 typedef char *infotype;
 
 typedef struct Keranjang *stroller;
 typedef struct Keranjang{
 	stroller prev;
+	infotype kode;
 	infotype nama_barang;
+	infotype size;
 	int harga;
 	int kuantitas;
 	int total;
@@ -35,7 +39,6 @@ typedef struct Keranjang{
 
 typedef struct node *address;
 struct node {
-
 	char info;
 	int freq;
 	address prev;
@@ -57,7 +60,7 @@ typedef struct LeafRef {
 
 typedef struct FileContent *address2;
 typedef struct FileContent {
-	infotype nmbrg, harga, stok;
+	infotype kode, nmbrg, harga, stok, size;
 	address2 next;
 } filecontent;
 

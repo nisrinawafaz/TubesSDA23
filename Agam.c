@@ -62,26 +62,33 @@ infotype sensitiveCase(infotype kata){
 void InputBarang(Link *root){
 	FILE *pf;
 	FILE *in;
-	infotype barang, harga, stok, barangbinary, hargabinary, stokbinary, penampung;
+	infotype kode, barang, size, harga, stok, kodebinary, barangbinary, sizebinary, hargabinary, stokbinary, penampung;
 	char pilihan, pilihan1, lagi = 'y';
 	int stokbarang, stokbarang1;
+	int cek = 0;
 	
 	
 	while (lagi == 'y' || lagi =='Y'){
+		kode = (infotype) malloc (50*sizeof(char));
 		barang = (infotype) malloc (50*sizeof(char));
+		size = (infotype) malloc (50*sizeof(char));
 		harga = (infotype) malloc (50*sizeof(char));
 		stok = (infotype) malloc (50*sizeof(char));
+		kodebinary = (infotype) malloc (50*sizeof(char));
 		barangbinary = (infotype) malloc (50*sizeof(char));
+		sizebinary = (infotype) malloc (50*sizeof(char));
 		hargabinary = (infotype) malloc (50*sizeof(char));
 		stokbinary = (infotype) malloc (50*sizeof(char));
 	
 		barang = InputCodeChar("\nMasukkan Nama Barang:");
 		barang = sensitiveCase(barang);
-		if(SearchBarang("NamaBarang.txt", barang)){
-			FSearchBarang("NamaBarang.txt", barang, &harga, &stok);
+		size = InputCodeChar("\nMasukkan Ukuran Barang:");
+		size = sensitiveCase(size);
+		if(SearchBarang("NamaBarang.txt", barang) && SearchSize("NamaBarang.txt", barang, size)){
+			FSearchBarang("NamaBarang.txt", &kode, barang, size, &harga, &stok);
 			
-			printf("\nBerikut adalah Harga dan Stok Barang %s:\n", barang);
-			printf("Harga: %s, Stok: %s\n", harga, stok);
+			printf("\nBerikut adalah Harga, Size, dan Stok Barang %s:\n", barang);
+			printf("Size: %s, Harga: %s, Stok: %s\n", size, harga, stok);
 			
 			printf("Apakah anda ingin mengubah Harga? (Y/N)");
 			fflush(stdin);
@@ -119,16 +126,22 @@ void InputBarang(Link *root){
 				
 			}
 			Replace(barang, harga, stok);
-			
-		}else{
+		} else{
 			harga = InputCodeChar("Masukkan Harga Barang:");
 			stok = InputCodeChar("Masukkan Jumlah Stok Barang:");
+			
+			if (SearchBarang("NamaBarang.txt", barang)){
+				FSearchKode("NamaBarang.txt", &kode, barang);
+				cek = 1;
+			} else{
+				kode = BuatKodeBarang (barang);
+			}
 			
 			pf = fopen("NamaBarang.txt","a");
 			if (!pf){
 				printf("\nFile tidak ditemukan");
 			} else{
-				fprintf(pf,"%s\t%s\t%s\n",barang, harga, stok);
+				fprintf(pf,"%s\t%s\t%s\t%s\t%s\n", kode, barang, size, harga, stok);
 				fclose(pf);
 			}
 			
@@ -136,21 +149,28 @@ void InputBarang(Link *root){
 			if (!pf){
 				printf("\nFile tidak ditemukan");
 			} else{
-				fprintf(pf,"%s\t%s\t%s",barang, harga, stok);
+				fprintf(pf,"%s%s%s%s%s", kode, barang, size, harga, stok);
 				fclose(pf);
 			}
 			
 			*root = CreateHuffmanTree();
-			incodeBarang(&barangbinary, &hargabinary, &stokbinary, barang, harga, stok, *root);
-			
+			incodeBarang(&barangbinary, &sizebinary, &hargabinary, &stokbinary, barang, size, harga, stok, *root);
+			if (cek == 1){
+				FSearchKodeBinary("KodeBarang.txt", kode, &kodebinary);
+				cek = 0;
+			} else {
+				kodebinary = Incode(*root, kode);
+				InputFileKodeBarang (kode, kodebinary);
+			}
+			printf ("\ncoba");
+			getche();
 			pf = fopen("BarangBinary.txt","a");
 			if (!pf){
 				printf("\nFile tidak ditemukan");
 			} else{
-				fprintf(pf,"%s\t%s\t%s\n", barangbinary, hargabinary, stokbinary);
+				fprintf(pf,"%s\t%s\t%s\t%s\n", kodebinary, barangbinary, sizebinary, hargabinary, stokbinary);
 				fclose(pf);
 			}
-			
 		}
 		printf ("\n\nApakah anda ingin menginputkan barang lagi? (y/t)");
 		lagi = getche ();	
