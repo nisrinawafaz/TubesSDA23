@@ -9,7 +9,7 @@ void selamat_datang();
 
 void loading(char x[100]);
 
-void selection(int *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan);
+void selection(char *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan);
 
 void inputLogin(infotype *username, infotype *password);
 
@@ -17,7 +17,7 @@ void adminFitur(Link *root);
 
 void pemesanan(stroller *front, stroller *rear, Link root);
 
-void input_struk(stroller data);
+void input_struk(stroller data, int total, int minimal, double ppn, double diskon, double hasil, double uang_bayar, double uang_kembalian);
 
 stroller AlokasiKeranjang(infotype kode, infotype barang,infotype size,  int harga, int kuantitas, int total);
 
@@ -38,6 +38,8 @@ void DelKeranjang (stroller *front, infotype nama);
 void DeAlokasi (stroller P);
 
 void header_struk();
+
+void footer_struk();
 
 double hitung_diskon(int total, double potongan);
 

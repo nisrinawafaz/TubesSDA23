@@ -13,7 +13,7 @@ infotype InputCodeBinary(infotype deskripsi);
 infotype Decode(Link root, infotype str);
 void InputBarang(Link *root);
 infotype sensitiveCase(infotype kata);
-double UangKembalian(double totalHarga);
+double UangKembalian(double totalHarga, double *JumlahUang);
 void tampilanKembalian(double Uangkembalian);
 
 #endif

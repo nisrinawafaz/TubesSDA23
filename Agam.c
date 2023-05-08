@@ -169,21 +169,19 @@ void InputBarang(Link *root){
 	}
 }
 
-double UangKembalian(double totalHarga){
-	double UangKembali, JumlahUang;
+double UangKembalian(double totalHarga, double *JumlahUang){
+	double UangKembali;
 	
 	do{
 		printf("\nMasukkan Jumlah Uang: ");
-		scanf("%lf", &JumlahUang);
+		scanf("%lf", JumlahUang);
 		
-		if(totalHarga > JumlahUang){
+		if(totalHarga > *JumlahUang){
 			printf("\nMaaf Uang Anda kurang");
 		}	
-	}while(totalHarga > JumlahUang);
+	}while(totalHarga > *JumlahUang);
 
-	UangKembali = JumlahUang - totalHarga;
-	printf("%lf", UangKembali);
-	printf("\nini yang g %g", UangKembali);
+	UangKembali = *JumlahUang - totalHarga;
 	
 	return UangKembali;
 }

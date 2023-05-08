@@ -58,14 +58,14 @@ void loading(char x[100])
 }
 
 
-void selection(int *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan)
+void selection(char *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan)
 {
-	system("cls");
-	printf("%s \n", pertanyaan);
-	printf("%s \n", fChoice);
-	printf("%s \n", sChoice);
-	printf("%s \n", kesimpulan);
-	scanf("%d", choice);
+		system("cls");
+		printf("%s \n", pertanyaan);
+		printf("%s \n", fChoice);
+		printf("%s \n", sChoice);
+		printf("%s \n", kesimpulan);
+		*choice = getche();
 }
 
 void inputLogin(infotype *username, infotype *password)
@@ -80,7 +80,7 @@ void inputLogin(infotype *username, infotype *password)
 void adminFitur(Link *root)
 {
 	bool valid;
-	int fitur;
+	char fitur;
 	double potongan = 0.07;
 	double ppn = 0.10;
 	int minimal = 100000;
@@ -89,6 +89,7 @@ void adminFitur(Link *root)
 	double pajak;
 	double total_akhir;
 	double uang_kembalian;
+	double uang_bayar;
 	uang_kembalian = 0;
 	infotype username;
 	username = (infotype)malloc(20*sizeof(char));
@@ -114,14 +115,13 @@ void adminFitur(Link *root)
 			do
 			{
 				selection(&fitur, "Input Barang Baru", "Kasir", "Fitur admin : ", "saya akan menggunakan fitur : ");
-				if(fitur == 1)
+				if(fitur == '1')
 				{
 					InputBarang(root);
 				}
-				else if(fitur == 2)
+				else if(fitur == '2')
 				{
 					pemesanan(&front, &rear, *root);
-					input_struk(front);
 					system("cls");
 					PrintInfokeranjang (front);
 					total = total_harga(front);
@@ -129,9 +129,9 @@ void adminFitur(Link *root)
 					pajak = hitung_ppn(total, ppn);
 					total_akhir = hitung_hasil(total, potongan,  minimal,  pajak);
 					output_bayar(total, minimal, pajak, potongan, total_akhir);	
-					uang_kembalian = UangKembalian(total_akhir);
-					printf("\n di .c%g", uang_kembalian);
+					uang_kembalian = UangKembalian(total_akhir, &uang_bayar);
 					tampilanKembalian(uang_kembalian);
+					input_struk(front, total, minimal, pajak, potongan, total_akhir, uang_bayar, uang_kembalian);
 				}
 				else
 				{
@@ -139,7 +139,7 @@ void adminFitur(Link *root)
 					printf("pilih fitur yang sudah tersedia [klik enter]");
 					getche();
 				}
-			}while(fitur !=1 && fitur !=2);
+			}while(fitur !='1' && fitur !='2');
 		}
 		else
 		{
@@ -188,80 +188,93 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 					FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
 					stok = atoi(KodeCharStok);
 					if(stok != 0)
-					{
-						do
 						{
-							printf("\n masukkan kuantitas barang : ");
-							scanf("%d", &kuantitas);
-							if(kuantitas == 0|| kuantitas> stok)
+							do
 							{
-								printf("\n kuantitas tidak valid, masukkan kuantitas mulai dari 1");
-								printf("\n klik [enter]");
-								getche();
-							}	
-						}while(kuantitas == 0 || kuantitas> stok);
-						FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
-						stok = atoi(KodeCharStok);
-						stok = stok - kuantitas;
-						sprintf(KodeCharStok, "%d", stok);
-						harga  = atoi(KodeCharHarga);
-						total = harga * kuantitas;
-						alamatBarang = SearchKeranjang (*front, KodeCharNama);
-						if(alamatBarang != Nil)
-						{
-							kuantitas = kuantitas + Kuantitas(alamatBarang);
-							Kuantitas(alamatBarang) = kuantitas;
-							Total(alamatBarang) = harga * kuantitas;
+								printf("\n masukkan kuantitas barang : ");
+								scanf("%d", &kuantitas);
+								if(kuantitas == 0 || kuantitas <0)
+								{
+									printf("\n kuantitas tidak valid, masukkan kuantitas mulai dari 1");
+									printf("\n klik [enter]");
+									getche();
+								}	
+								else if( kuantitas> stok)
+								{
+									printf("\n kuantitas tidak valid, stok hanya tersisa %d", stok);
+									printf("\n klik [enter]");
+									getche();
+								}
+							}while(kuantitas == 0 || kuantitas> stok || kuantitas <0);
+							FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
+							stok = atoi(KodeCharStok);
+							stok = stok - kuantitas;
+							sprintf(KodeCharStok, "%d", stok);
+							harga  = atoi(KodeCharHarga);
+							total = harga * kuantitas;
+							alamatBarang = SearchKeranjang (*front, KodeCharNama);
+							if(alamatBarang != Nil)
+							{
+								kuantitas = kuantitas + Kuantitas(alamatBarang);
+								Kuantitas(alamatBarang) = kuantitas;
+								Total(alamatBarang) = harga * kuantitas;
+							}
+							else
+							{
+								InsVLastKeranjang(&(*front), &(*rear), KodeCharKodeBarang, KodeCharNama,KodeCharSize, harga, kuantitas, total);
+							}
+							sprintf(KodeCharHarga, "%d", harga);
+							sprintf(KodeCharStok, "%d", stok);
+							Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
+							PrintInfokeranjang (*front);
+							printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
+							nStep = getche();
+							if(nStep == 'H' || nStep == 'h')
+							{
+								deleteKeranjang = SearchKeranjang (*front, KodeCharKodeBarang);
+								do{
+									printf("\n masukkan kuantitas barang : ");
+									scanf("%d", &kuantitas);
+								}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
+								FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
+								sprintf(KodeCharStok, "%d", stok);
+								stok = atoi(KodeCharStok);
+								stok = stok + kuantitas;
+								Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
+								sprintf(KodeCharStok, "%d", stok);
+								printf("hai %s", KodeCharStok);
+								Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
+								if(Kuantitas(deleteKeranjang) == 0)
+								{
+									DelKeranjang (front, KodeCharKodeBarang);
+								}
+								
+							}
+							printf("Ketikkan huruf 'T' untuk menambah barang : \n");
+							nStep = getche();
+							printf("hoii %c", nStep);
+							if(nStep != 'T' || nStep != 't')
+							{
+								break;
+							}
 						}
 						else
 						{
-							InsVLastKeranjang(&(*front), &(*rear), KodeCharKodeBarang, KodeCharNama,KodeCharSize, harga, kuantitas, total);
+							printf("\n Kode yang anda masukkan tidak valid karena stok habis : ");
+							printf("\n masukkan kode barang yang valid [klik enter] : ");
+							getche();
 						}
-						sprintf(KodeCharHarga, "%d", harga);
-						sprintf(KodeCharStok, "%d", stok);
-						Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
-						PrintInfokeranjang (*front);
-						printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
-						nStep = getche();
-						if(nStep == 'H' || nStep == 'h')
-						{
-							/*KodeBinaryKodeBarang = (infotype) malloc (30*sizeof(char));
-							KodeCharKodeBarang = (infotype) malloc (30*sizeof(char));
-							KodeBinaryKodeBarang = InputCodeBinary("\n masukkan kode yang tertera pada barang : ");
-							FSearchKodeChar("KodeBarang.txt", KodeBinaryKodeBarang, &KodeCharKodeBarang);*/
-							deleteKeranjang = SearchKeranjang (*front, KodeCharKodeBarang);
-							do{
-								printf("\n masukkan kuantitas barang : ");
-								scanf("%d", &kuantitas);
-							}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
-							FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
-							sprintf(KodeCharStok, "%d", stok);
-							stok = atoi(KodeCharStok);
-							stok = stok + kuantitas;
-							Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
-							sprintf(KodeCharStok, "%d", stok);
-							printf("hai %s", KodeCharStok);
-							Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
-							if(Kuantitas(deleteKeranjang) == 0)
-							{
-								DelKeranjang (front, KodeCharKodeBarang);
-							}
-							
-						}
-						printf("Ketikkan huruf 'T' untuk menambah barang : \n");
-						nStep = getche();
-					}
 				}else{
 					printf("\n Kode yang anda masukkan tidak valid : ");
 					printf("\n masukkan kode barang yang valid [klik enter] : ");
 					getche();
 				}
-			}while(KodeCharKodeBarang == Nil);
+			}while(KodeCharKodeBarang == Nil || stok == 0);
 		}while(nStep == 'T' || nStep == 't');
 	
 }
 
-void input_struk(stroller data)
+void input_struk(stroller data, int total, int minimal, double ppn, double diskon, double hasil, double uang_bayar, double uang_kembalian)
 {
 	stroller P;
 	int i;
@@ -281,12 +294,29 @@ void input_struk(stroller data)
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 fprintf(kj, "  %d.\t   %s\t\t      %d\t    %d\t     %d\t      \n", i+1, Barang(P), Harga(P), Kuantitas(P), Total(P));
+				 fprintf(kj, "  %d.\t   %s\t\t   %s\t\t      %d\t    %d\t     %d\t      \n", i, Barang(P), Size(P), Harga(P), Kuantitas(P), Total(P));
 			fprintf(kj,"|-------------------------------------------------------------|\n");
 				 P = Next(P);
 				 i++;
 			}
 		 }
+		fprintf(kj,"PPN 10 persen :                          Rp. %g\n", ppn);
+		if(total >= minimal)
+		{
+			fprintf(kj,"|---------------Selamat anda mendapatkan diskon!--------------|\n");
+			fprintf(kj,"  Jumlah pembelanjaan anda lebih dari %d\n",minimal);
+			fprintf(kj,"  Jumlah pembayaran : Rp. %g ( Diskon sebesar Rp.%g) \n",hasil, diskon);
+			fprintf(kj,"|-------------------------------------------------------------|\n");
+			
+		}
+		else
+		{
+			fprintf(kj,"  Jumlah pembayaran :                       Rp. %g \n",hasil);
+			fprintf(kj,"|-------------------------------------------------------------|\n");
+		}
+		fprintf(kj,"  Nominal Uang :                       Rp. %g \n",uang_bayar);
+		fprintf(kj,"  Kembalian    :                       Rp. %g \n",uang_kembalian);
+		footer_struk();
 	}
 	fclose(kj);
 }
@@ -372,17 +402,17 @@ void PrintInfokeranjang (stroller data)
 	
 	 /* Algoritma */
 	system("cls");
-	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
-	puts	("\t\t\t\t\t\t\t\t\t|                       DELIVERY MARKET                       |");
-	puts	("\t\t\t\t\t\t\t\t\t|                   Telepon : 087734469228                    |");
-	puts	("\t\t\t\t\t\t\t\t\t|                Jl. Gegerkalong Hilir, Ciwaruga              |");
-	puts	("\t\t\t\t\t\t\t\t\t|                        Bandung Barat                        |");
-	puts	("\t\t\t\t\t\t\t\t\t|=============================================================|");
-	puts	("\t\t\t\t\t\t\t\t\t| NO |      BARANG        |   HARGA   | KUANTITAS |   TOTAL   |");
-	puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");
+	puts	("\n\t\t\t\t\t\t\t\t\t|======================================================================|");
+	puts	("\t\t\t\t\t\t\t\t\t|                            DELIVERY MARKET                             |");
+	puts	("\t\t\t\t\t\t\t\t\t|                         Telepon : 087734469228                         |");
+	puts	("\t\t\t\t\t\t\t\t\t|                      Jl. Gegerkalong Hilir, Ciwaruga                   |");
+	puts	("\t\t\t\t\t\t\t\t\t|                              Bandung Barat                             |");
+	puts	("\t\t\t\t\t\t\t\t\t|========================================================================|");
+	puts	("\t\t\t\t\t\t\t\t\t| NO |      BARANG        |   SIZE   |   HARGA   | KUANTITAS |   TOTAL   |");
+	puts	("\t\t\t\t\t\t\t\t\t|------------------------------------------------------------------------|");
 	if (data == Nil)
 	{
-		 printf ("List Kosong .... \a\n");
+		 printf (" ");
 	}
 	else	/* List memiliki elemen */
 	{
@@ -396,7 +426,7 @@ void PrintInfokeranjang (stroller data)
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 printf (" \t\t\t\t\t\t\t\t\t  %d.\t   %s\t      %d\t    %d\t     %d\t      \n ", i, Barang(P), Harga(P), Kuantitas(P), Total(P));
+				 printf (" \t\t\t\t\t\t\t\t\t  %d.\t   %s\t    %s\t     %d\t    %d\t     %d\t      \n ", i, Barang(P),Size(P), Harga(P), Kuantitas(P), Total(P));
 				 puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");	
 				 P = Next(P);
 				 i++;
@@ -459,17 +489,27 @@ void header_struk()
 {
 	FILE *kj;
 	kj=fopen("struk_belanja.txt", "w+");
-	fprintf(kj,"|=============================================================|\n");
-	fprintf(kj,"|                       DELIVERY MARKET                       |\n");
-	fprintf(kj,"|                   Telepon : 087734469228                    |\n");
-	fprintf(kj,"|                Jl. Gegerkalong Hilir, Ciwaruga              |\n");
-	fprintf(kj,"|                        Bandung Barat                        |\n");
-	fprintf(kj,"|=============================================================|\n");
-    fprintf(kj,"| NO |      BARANG        |   HARGA   | KUANTITAS |   TOTAL   |\n");
-    fprintf(kj,"|-------------------------------------------------------------|\n");
+    fprintf(kj,"|========================================================================|\n");
+	fprintf(kj,"|                            DELIVERY MARKET                             |\n");
+	fprintf(kj,"|                         Telepon : 087734469228                         |\n");
+	fprintf(kj,"|                      Jl. Gegerkalong Hilir, Ciwaruga                   |\n");
+	fprintf(kj,"|                              Bandung Barat                             |\n");
+	fprintf(kj,"|========================================================================|\n");
+	fprintf(kj,"| NO |      BARANG        |   SIZE   |   HARGA   | KUANTITAS |   TOTAL   |\n");
+	fprintf(kj,"|------------------------------------------------------------------------|\n");
     fclose(kj);
 }
 
+void footer_struk()
+{
+	FILE *kj;
+	kj=fopen("struk_belanja.txt", "a+");
+	fprintf(kj,"|=============================================================|\n");
+	fprintf(kj,"|             TERIMA KASIH, SUDAH BERBELANJA                  |\n");
+	fprintf(kj,"|              SELAMAT BERBELANJA KEMBALI :)                  |\n");
+	fprintf(kj,"|=============================================================|\n");
+	fclose(kj);
+}
 double hitung_diskon(int total, double potongan)
 {
 	double hitung;

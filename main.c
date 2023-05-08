@@ -8,7 +8,7 @@ int main()
 {
 	address front, P;
 	Link root;
-	int role;
+	char role;
 	infotype KodeChar;
 	
 	
@@ -16,7 +16,7 @@ int main()
 	KodeBinary = (infotype)malloc(30*sizeof(char));
 	
 	KodeChar = Nil;
-	
+	 
 	//market
 	//selamat_datang();
 	system("cls");
@@ -24,11 +24,11 @@ int main()
 	do
 	{
 		selection(&role, "user", "admin", "Siapakah Anda?", "saya adalah");
-		if(role == 1)
+		if(role == '1')
 		{
 			CekHarga ();
 		}
-		else if(role == 2)
+		else if(role == '2')
 		{
 			adminFitur(&root);
 		}
@@ -38,7 +38,7 @@ int main()
 			printf("pilih role yang sudah tersedia [klik enter]");
 			getche();
 		}
-	}while(role !=1 && role !=2);
+	}while(role !='1' && role !='2');
 	
 	return 0;
 }
