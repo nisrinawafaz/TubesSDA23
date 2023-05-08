@@ -156,99 +156,108 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 	char nStep;
 	char pilih;
 	bool search;
-	infotype KodeCharBarang;
+	infotype KodeCharKodeBarang;
+	infotype KodeCharNama;
 	infotype KodeCharHarga;
 	infotype KodeCharStok;
+	infotype KodeCharSize;
 	int harga;
 	int kuantitas;
 	int total;
 	int stok;
-	infotype KodeBinaryBarang;
-	infotype KodeBinaryHarga; 
-	infotype KodeBinaryStok;
+	infotype KodeBinaryKodeBarang;
 
 	stroller alamatBarang;
 	stroller deleteKeranjang;
 	
-	do
-	{
 		do
 		{
-			KodeCharBarang = (infotype) malloc (30*sizeof(char));
-			KodeBinaryHarga = (infotype) malloc (30*sizeof(char));
+			KodeCharKodeBarang = (infotype) malloc (30*sizeof(char));
+			KodeBinaryKodeBarang = (infotype) malloc (30*sizeof(char));
+			KodeCharNama = (infotype) malloc (30*sizeof(char));
+			KodeCharSize= (infotype) malloc (30*sizeof(char));
 			KodeCharHarga = (infotype) malloc (30*sizeof(char));
-			KodeBinaryStok = (infotype) malloc (30*sizeof(char));
 			KodeCharStok = (infotype) malloc (30*sizeof(char));
 			
-			KodeBinaryBarang = InputCodeBinary("\n masukkan kode yang tertera pada barang : ");
 			do
 			{
-				printf("\n masukkan kuantitas barang : ");
-				scanf("%d", &kuantitas);	
-			}while(kuantitas == 0);
-			search = SearchBarang("BarangBinary.txt", KodeBinaryBarang);
-			if(search)
-			{
-//				FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
-				KodeCharBarang = Decode(root, KodeBinaryBarang);
-				KodeCharHarga = Decode(root, KodeBinaryHarga);
-				KodeCharStok = Decode(root, KodeBinaryStok);
-				stok = atoi(KodeCharStok);
-				stok = stok - kuantitas;
-				sprintf(KodeCharStok, "%d", stok);
-				KodeBinaryStok = (infotype) malloc (30*sizeof(char));
-				KodeBinaryStok = Incode(root, KodeCharStok);
-				harga  = atoi(KodeCharHarga);
-				total = harga * kuantitas;
-				alamatBarang = SearchKeranjang (*front, KodeCharBarang);
-				if(alamatBarang != Nil)
+				KodeBinaryKodeBarang = InputCodeBinary("\n masukkan kode yang tertera pada barang : ");
+				FSearchKodeChar("KodeBarang.txt", KodeBinaryKodeBarang, &KodeCharKodeBarang);
+				if(KodeCharKodeBarang != Nil)
 				{
-					kuantitas = kuantitas + Kuantitas(alamatBarang);
-					Kuantitas(alamatBarang) = kuantitas;
-					Total(alamatBarang) = harga * kuantitas;
-				}
-				else
-				{
-					InsVLastKeranjang(&(*front), &(*rear), KodeCharBarang, harga, kuantitas, total);
-				}
-//				Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
-				PrintInfokeranjang (*front);
-				printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
-				nStep = getche();
-				if(nStep == 'H' || nStep == 'h')
-				{
-					KodeCharBarang = (infotype) malloc (30*sizeof(char));
-					KodeBinaryBarang = (infotype) malloc (30*sizeof(char));
-					KodeBinaryBarang = InputCodeBinary("\n--> Masukkan kode barang: ");
-					KodeCharBarang = Decode(root, KodeBinaryBarang);
-					deleteKeranjang = SearchKeranjang (*front, KodeCharBarang);
-					do{
-						printf("\n masukkan kuantitas barang : ");
-					scanf("%d", &kuantitas);
-					}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
-//					FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
-					KodeCharStok = Decode(root, KodeBinaryStok);
+					FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
 					stok = atoi(KodeCharStok);
-					stok = stok + kuantitas;
-					Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
-					sprintf(KodeCharStok, "%d", stok);
-					KodeBinaryStok = (infotype) malloc (30*sizeof(char));
-					KodeBinaryStok = Incode(root, KodeCharStok);
-//					Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
-					DelKeranjang (front, KodeCharBarang);
+					if(stok != 0)
+					{
+						do
+						{
+							printf("\n masukkan kuantitas barang : ");
+							scanf("%d", &kuantitas);
+							if(kuantitas == 0|| kuantitas> stok)
+							{
+								printf("\n kuantitas tidak valid, masukkan kuantitas mulai dari 1");
+								printf("\n klik [enter]");
+								getche();
+							}	
+						}while(kuantitas == 0 || kuantitas> stok);
+						FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
+						stok = atoi(KodeCharStok);
+						stok = stok - kuantitas;
+						sprintf(KodeCharStok, "%d", stok);
+						harga  = atoi(KodeCharHarga);
+						total = harga * kuantitas;
+						alamatBarang = SearchKeranjang (*front, KodeCharNama);
+						if(alamatBarang != Nil)
+						{
+							kuantitas = kuantitas + Kuantitas(alamatBarang);
+							Kuantitas(alamatBarang) = kuantitas;
+							Total(alamatBarang) = harga * kuantitas;
+						}
+						else
+						{
+							InsVLastKeranjang(&(*front), &(*rear), KodeCharKodeBarang, KodeCharNama,KodeCharSize, harga, kuantitas, total);
+						}
+						sprintf(KodeCharHarga, "%d", harga);
+						sprintf(KodeCharStok, "%d", stok);
+						Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
+						PrintInfokeranjang (*front);
+						printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
+						nStep = getche();
+						if(nStep == 'H' || nStep == 'h')
+						{
+							/*KodeBinaryKodeBarang = (infotype) malloc (30*sizeof(char));
+							KodeCharKodeBarang = (infotype) malloc (30*sizeof(char));
+							KodeBinaryKodeBarang = InputCodeBinary("\n masukkan kode yang tertera pada barang : ");
+							FSearchKodeChar("KodeBarang.txt", KodeBinaryKodeBarang, &KodeCharKodeBarang);*/
+							deleteKeranjang = SearchKeranjang (*front, KodeCharKodeBarang);
+							do{
+								printf("\n masukkan kuantitas barang : ");
+								scanf("%d", &kuantitas);
+							}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
+							FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
+							sprintf(KodeCharStok, "%d", stok);
+							stok = atoi(KodeCharStok);
+							stok = stok + kuantitas;
+							Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
+							sprintf(KodeCharStok, "%d", stok);
+							printf("hai %s", KodeCharStok);
+							Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
+							if(Kuantitas(deleteKeranjang) == 0)
+							{
+								DelKeranjang (front, KodeCharKodeBarang);
+							}
+							
+						}
+						printf("Ketikkan huruf 'T' untuk menambah barang : \n");
+						nStep = getche();
+					}
+				}else{
+					printf("\n Kode yang anda masukkan tidak valid : ");
+					printf("\n masukkan kode barang yang valid [klik enter] : ");
+					getche();
 				}
-				printf("Ketikkan huruf 'T' untuk menambah barang : \n");
-				nStep = getche();
-			}
-			else
-			{
-				printf("\n Kode yang anda masukkan tidak valid : ");
-				printf("\n masukkan kode barang yang valid [klik enter] : ");
-				getche();
-				break;
-			}
+			}while(KodeCharKodeBarang == Nil);
 		}while(nStep == 'T' || nStep == 't');
-	}while(!search);
 	
 }
 
@@ -282,7 +291,7 @@ void input_struk(stroller data)
 	fclose(kj);
 }
 
-stroller AlokasiKeranjang(infotype barang, int harga, int kuantitas, int total)
+stroller AlokasiKeranjang(infotype kode, infotype barang,infotype size,  int harga, int kuantitas, int total)
 {
 	 /* Kamus Lokal */
 	 stroller P;
@@ -292,7 +301,9 @@ stroller AlokasiKeranjang(infotype barang, int harga, int kuantitas, int total)
 	 if (P != Nil)		/* Alokasi berhasil */
 	 {
 		Prev(P) = Nil;
+		Kode(P) = kode;
 		Barang(P) = barang;
+		Size(P) = size;
 		Harga(P) = harga;
 		Kuantitas(P) = kuantitas;
 		Total(P) = total;
@@ -301,7 +312,7 @@ stroller AlokasiKeranjang(infotype barang, int harga, int kuantitas, int total)
 	 return (P);
 }
 
-stroller SearchKeranjang (stroller front, infotype barang)
+stroller SearchKeranjang (stroller front, infotype kode)
 {
 	 /* Kamus Lokal */
 	 stroller P;
@@ -310,7 +321,7 @@ stroller SearchKeranjang (stroller front, infotype barang)
 	 P = front;
 	 	while ((P != Nil) && (!found))
 		{
-			match = strcmp(Barang(P), barang);
+			match = strcmp(Kode(P), kode);
 			 if (match == 0)
 			 { 
 			 found = true; 	
@@ -341,10 +352,10 @@ void InsertLastKeranjang (stroller *front, stroller *rear, stroller P)
 	}
 }
 
-void InsVLastKeranjang(stroller *front, stroller *rear, infotype barang, int harga, int kuantitas, int total)
+void InsVLastKeranjang(stroller *front, stroller *rear, infotype kode, infotype barang, infotype size, int harga, int kuantitas, int total)
 {
 	stroller P;
-	P = AlokasiKeranjang(barang, harga, kuantitas, total);
+	P = AlokasiKeranjang(kode, barang,size, harga, kuantitas, total);
 	if (P != Nil)
 	{	
 	InsertLastKeranjang (front,rear, P);
@@ -394,7 +405,7 @@ void PrintInfokeranjang (stroller data)
 	}
 }
 
-void DelKeranjang (stroller *front, infotype nama)
+void DelKeranjang (stroller *front, infotype kode)
 /* IS : L sembarang */
 /* FS : Jika ada elemen list beraddress P, dengan Info(P) = X */
 /* 	Maka P dihapus dari list dan di dealokasi */
@@ -410,7 +421,7 @@ void DelKeranjang (stroller *front, infotype nama)
 	P = *front;
 	while ((P != Nil) && (!found))
 	{
-		compare = strcmp(Barang(P), nama);
+		compare = strcmp(Kode(P), kode);
 		 if (compare == 0)
 		 {	found = true;	}
 		 else
@@ -897,4 +908,6 @@ void FSearchKodeChar(infotype NmFile, infotype binary, infotype *kodeChar)
        fclose(in);
     }
 }
+
+
 

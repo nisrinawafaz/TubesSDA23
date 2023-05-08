@@ -180,19 +180,22 @@ void CekHarga ()
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
 			kodeChar = (infotype) malloc (50*sizeof(char));
-	
-	binary = InputCodeBinary("\n--> Masukkan kode barang: ");
-	FSearchKodeChar("KodeBarang.txt", binary, &kodeChar);
-	if(kodeChar != Nil)
+	do
 	{
-		FSearchBarang2("NamaBarang.txt", kodeChar, &nama, &size, &harga, &stok);
-		printf ("\nNama barang: %s", nama);
-		printf ("\nUkuran barang: %s", size);
-    	printf ("\nHarga: %s", harga);
-    	printf ("\nJumlah stok: %s", stok);	
-	}else{
-		printf ("\nKode barang yang anda inputkan salah");
-	}
+		binary = InputCodeBinary("\n--> Masukkan kode barang: ");
+		FSearchKodeChar("KodeBarang.txt", binary, &kodeChar);
+		if(kodeChar != Nil)
+		{
+			FSearchBarang2("NamaBarang.txt", kodeChar, &nama, &size, &harga, &stok);
+			printf ("\nNama barang: %s", nama);
+			printf ("\nUkuran barang: %s", size);
+	    	printf ("\nHarga: %s", harga);
+	    	printf ("\nJumlah stok: %s", stok);	
+		}else{
+			printf ("\nKode barang yang anda inputkan salah");
+		}
+	}while(kodeChar == Nil);
+	
 }
 
 bool SearchBarang(infotype NmFile, infotype NmBarang)
@@ -342,7 +345,7 @@ void FSearchKodeBinary(infotype NmFile, infotype Kode, infotype *kodebinary)
     }
 }
 
-void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
+void Replace(infotype kodebrg, infotype hargabaru, infotype stokbaru)
 {
 	FILE *in;
 	bool ketemu = false;
@@ -368,7 +371,7 @@ void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
        fclose(in);
     }
     
-    temp = SearchNodeBrg(front, namabrg);
+    temp = SearchNodeBrg(front, kodebrg);
     
     if (temp == NULL){
     	printf ("Barang yang anda inputkan tidak ada");
@@ -444,7 +447,7 @@ address2 SearchNodeBrg (address2 front, infotype X)
 	P = front;
 	while ((P != Nil) && (!found))
 	{
-		if (strcmp(NamaBrg(P), X) == 0)
+		if (strcmp(Kode(P), X) == 0)
 		{ 
 			found = true; 	
 			return P;

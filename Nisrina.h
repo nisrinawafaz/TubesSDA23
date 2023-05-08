@@ -19,13 +19,17 @@ void pemesanan(stroller *front, stroller *rear, Link root);
 
 void input_struk(stroller data);
 
-stroller AlokasiKeranjang(infotype barang, int harga, int kuantitas, int total);
+stroller AlokasiKeranjang(infotype kode, infotype barang,infotype size,  int harga, int kuantitas, int total);
 
 stroller SearchKeranjang (stroller front, infotype barang);
 
+void FSearchBarang2(infotype NmFile, infotype kode, infotype *NmBarang, infotype *size, infotype *Harga, infotype *Stok);
+
+void FSearchKodeChar(infotype NmFile, infotype binary, infotype *kodeChar);
+
 void InsertLastKeranjang (stroller *front, stroller *rear, stroller P);
 
-void InsVLastKeranjang(stroller *front, stroller *rear, infotype barang, int harga, int kuantitas, int total);
+void InsVLastKeranjang(stroller *front, stroller *rear, infotype kode, infotype barang, infotype size, int harga, int kuantitas, int total);
 
 void PrintInfokeranjang (stroller data);
 
