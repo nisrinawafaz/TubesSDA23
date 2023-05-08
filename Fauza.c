@@ -168,21 +168,29 @@ Link CreateTree (address1 front)
 	}
 }
 
-void CekHarga (Link root)
+void CekHarga ()
 {
-	infotype kode, barang, size, harga, stok;
+	infotype binary, nama, size, harga, stok;
+	infotype kodeChar;
+			
+			
+			binary = (infotype) malloc (50*sizeof(char));
+			nama = (infotype) malloc (50*sizeof(char));
+			size = (infotype) malloc (50*sizeof(char));
+			harga = (infotype) malloc (50*sizeof(char));
+			stok = (infotype) malloc (50*sizeof(char));
+			kodeChar = (infotype) malloc (50*sizeof(char));
 	
-	barang = InputCodeBinary("\n--> Masukkan kode barang: ");
-	
-	if (SearchBarang("BarangBinary.txt", barang)){
-    	FSearchBarang("BarangBinary.txt", &kode, barang, size, &harga, &stok);
-    	barang = Decode(root, barang);
-    	printf ("\nNama barang: %s", barang);
-    	harga = Decode(root, harga);
+	binary = InputCodeBinary("\n--> Masukkan kode barang: ");
+	FSearchKodeChar("KodeBarang.txt", binary, &kodeChar);
+	if(kodeChar != Nil)
+	{
+		FSearchBarang2("NamaBarang.txt", kodeChar, &nama, &size, &harga, &stok);
+		printf ("\nNama barang: %s", nama);
+		printf ("\nUkuran barang: %s", size);
     	printf ("\nHarga: %s", harga);
-    	stok = Decode(root, stok);
-    	printf ("\nJumlah stok: %s", stok);
-	} else{
+    	printf ("\nJumlah stok: %s", stok);	
+	}else{
 		printf ("\nKode barang yang anda inputkan salah");
 	}
 }

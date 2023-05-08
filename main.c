@@ -26,7 +26,7 @@ int main()
 		selection(&role, "user", "admin", "Siapakah Anda?", "saya adalah");
 		if(role == 1)
 		{
-			CekHarga (root);
+			CekHarga ();
 		}
 		else if(role == 2)
 		{

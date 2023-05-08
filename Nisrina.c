@@ -850,3 +850,51 @@ infotype Incode(Link root, infotype KodeChar)
 
 
 
+void FSearchBarang2(infotype NmFile, infotype kode, infotype *NmBarang, infotype *size, infotype *Harga, infotype *Stok){
+	FILE *in;
+	infotype KodeBarang;
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(1){
+			KodeBarang = (infotype) malloc (50*sizeof(char));
+			
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", KodeBarang,*NmBarang, *size, *Harga, *Stok);
+			fflush(stdin);
+			
+        	if (strcmp(KodeBarang, kode) == 0){
+				break;
+			}
+       }
+       fclose(in);
+    }
+}
+
+void FSearchKodeChar(infotype NmFile, infotype binary, infotype *kodeChar)
+{
+	FILE *in;
+	infotype Kbinary;
+	Kbinary = (infotype) malloc (50*sizeof(char));
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(!feof(in)){
+        	fscanf(in,"%[^\t]\t%[^\n]\n", *kodeChar, Kbinary);
+			fflush(stdin);
+			
+        	if (strcmp(Kbinary, binary) == 0){
+				break;
+			}
+
+       }
+       if (strcmp(Kbinary, binary) == 1){
+			*kodeChar = Nil;
+		}
+       fclose(in);
+    }
+}
+

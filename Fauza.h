@@ -19,7 +19,7 @@ address1 CreateListOfLeaf (address head);
 
 Link CreateTree (address1 front);
 
-void CekHarga(Link root);
+void CekHarga();
 
 bool SearchBarang(infotype NmFile, infotype NmBarang);
 
