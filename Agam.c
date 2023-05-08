@@ -125,17 +125,12 @@ void InputBarang(Link *root){
 				sprintf(stok, "%d", (stokbarang+stokbarang1));
 				
 			}
-			Replace(barang, harga, stok);
+			Replace(kode, harga, stok);
 		} else{
 			harga = InputCodeChar("Masukkan Harga Barang:");
 			stok = InputCodeChar("Masukkan Jumlah Stok Barang:");
 			
-			if (SearchBarang("NamaBarang.txt", barang)){
-				FSearchKode("NamaBarang.txt", &kode, barang);
-				cek = 1;
-			} else{
-				kode = BuatKodeBarang (barang);
-			}
+			kode = BuatKodeBarang (barang);
 			
 			pf = fopen("NamaBarang.txt","a");
 			if (!pf){
@@ -155,13 +150,10 @@ void InputBarang(Link *root){
 			
 			*root = CreateHuffmanTree();
 			incodeBarang(&barangbinary, &sizebinary, &hargabinary, &stokbinary, barang, size, harga, stok, *root);
-			if (cek == 1){
-				FSearchKodeBinary("KodeBarang.txt", kode, &kodebinary);
-				cek = 0;
-			} else {
-				kodebinary = Incode(*root, kode);
-				InputFileKodeBarang (kode, kodebinary);
-			}
+			
+			kodebinary = Incode(*root, kode);
+			InputFileKodeBarang (kode, kodebinary);
+			
 			printf ("\ncoba");
 			getche();
 			pf = fopen("BarangBinary.txt","a");

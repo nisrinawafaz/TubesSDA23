@@ -296,55 +296,6 @@ void FSearchBarang(infotype NmFile, infotype *kode, infotype NmBarang, infotype 
     }
 }
 
-void FSearchKode(infotype NmFile, infotype *kode, infotype NmBarang)
-{
-	FILE *in;
-	infotype nama;
-	infotype size, Harga, Stok;
-	
-	in = fopen(NmFile,"r");
-    if(!in){  
-       printf("\nFile tidak ditemukan");
-    }else{
-       while(1){
-			*kode = (infotype) malloc (50*sizeof(char));
-			nama = (infotype) malloc (50*sizeof(char));
-			size = (infotype) malloc (50*sizeof(char));
-			Harga = (infotype) malloc (50*sizeof(char));
-			Stok = (infotype) malloc (50*sizeof(char));
-			
-        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\t]\t%[^\t]\t%[^\n]\n", *kode, nama, size, Harga, Stok);
-			fflush(stdin);
-			
-        	if (strcmp(NmBarang, nama) == 0){
-				break;
-			}
-       }
-       fclose(in);
-    }
-}
-
-void FSearchKodeBinary(infotype NmFile, infotype Kode, infotype *kodebinary)
-{
-	FILE *in;
-	infotype kode;
-	
-	in = fopen(NmFile,"r");
-    if(!in){  
-       printf("\nFile tidak ditemukan");
-    }else{
-       while(!feof(in)){
-        	fscanf(in,"%[^\t]\t%[^\n]\n", kode, *kodebinary);
-			fflush(stdin);
-			
-        	if (strcmp(Kode, kode) == 0){
-				break;
-			}
-       }
-       fclose(in);
-    }
-}
-
 void Replace(infotype kodebrg, infotype hargabaru, infotype stokbaru)
 {
 	FILE *in;

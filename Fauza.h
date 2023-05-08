@@ -27,10 +27,6 @@ bool SearchSize (infotype NmFile, infotype NmBarang, infotype Size);
 
 void FSearchBarang(infotype NmFile, infotype *kode, infotype NmBarang, infotype size, infotype *Harga, infotype *Stok);
 
-void FSearchKode(infotype NmFile, infotype *kode, infotype NmBarang);
-
-void FSearchKodeBinary(infotype NmFile, infotype Kode, infotype *kodebinary);
-
 void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru);
 
 void InsertLastBrg (address2 *head, address2 *tail, address2 Q);
