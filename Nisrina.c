@@ -106,8 +106,8 @@ void adminFitur(Link *root)
 	
 	do
 	{
-		inputLogin(&username, &password);
-		valid = loginAdmin(username,password);
+		//inputLogin(&username, &password);
+		valid = 1;//loginAdmin(username,password);
 		if(valid)
 		{
 			printf("login berhasil");
@@ -187,7 +187,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 				{
 					FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
 					stok = atoi(KodeCharStok);
-					if(stok != 0)
+						if(stok != 0)
 						{
 							do
 							{
@@ -918,28 +918,31 @@ void FSearchBarang2(infotype NmFile, infotype kode, infotype *NmBarang, infotype
 }
 
 void FSearchKodeChar(infotype NmFile, infotype binary, infotype *kodeChar)
-//modul search kode di file kode barang
 {
 	FILE *in;
-	infotype Kbinary;
-	Kbinary = (infotype) malloc (50*sizeof(char));
+	int compare;
+	infotype Kbinary,Kchar;
+	Kbinary = (infotype) malloc (30*sizeof(char));
+	Kchar = (infotype) malloc (30*sizeof(char));
 	
 	in = fopen(NmFile,"r");
     if(!in){  
        printf("\nFile tidak ditemukan");
     }else{
        while(!feof(in)){
-        	fscanf(in,"%[^\t]\t%[^\n]\n", *kodeChar, Kbinary);
+        	fscanf(in,"%[^\t]\t%[^\n]\n", Kchar, Kbinary);
 			fflush(stdin);
-			
-        	if (strcmp(Kbinary, binary) == 0){
-				break;
+			compare = strcmp(Kbinary, binary);
+        	if (compare == 0){
+        		*kodeChar = Kchar;
+        		break;
+			}
+			else
+			{
+				*kodeChar = Nil;
 			}
 
        }
-       if (strcmp(Kbinary, binary) == 1){
-			*kodeChar = Nil;
-		}
        fclose(in);
     }
 }
