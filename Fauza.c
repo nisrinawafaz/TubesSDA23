@@ -110,7 +110,7 @@ address1 CreateListOfLeaf (address head)
 	front = NULL;
 	rear = NULL;
 	
-	while (head != NULL){
+	while (Next(head) != NULL){
 		P = CreateLeafRef(CreateNodeTree (Info(head), Freq(head)));
 		
 		InsLastLeaf (&front, &rear, P);
@@ -146,6 +146,7 @@ Link CreateTree (address1 front)
 		Parent(left) = parent;
 		
 		if (rear == NULL){
+			PrintTree(parent, i);
 			return parent;
 		} else{
 			pcur = rear;
@@ -172,16 +173,18 @@ void CekHarga ()
 {
 	infotype binary, nama, size, harga, stok;
 	infotype kodeChar;
-			
-			
-			binary = (infotype) malloc (50*sizeof(char));
-			nama = (infotype) malloc (50*sizeof(char));
-			size = (infotype) malloc (50*sizeof(char));
-			harga = (infotype) malloc (50*sizeof(char));
-			stok = (infotype) malloc (50*sizeof(char));
-			kodeChar = (infotype) malloc (50*sizeof(char));
+				
+	binary = (infotype) malloc (50*sizeof(char));
+	nama = (infotype) malloc (50*sizeof(char));
+	size = (infotype) malloc (50*sizeof(char));
+	harga = (infotype) malloc (50*sizeof(char));
+	stok = (infotype) malloc (50*sizeof(char));
+	kodeChar = (infotype) malloc (50*sizeof(char));
+	
 	teksUserPelanggan();
+	
 	tampilanFile("TAMPILAN(2).txt");
+	
 	do
 	{
 		binary = InputCodeBinary("\n\n\t\t\t\t\t\t\t--> Masukkan kode yang tertera pada barang: ");
@@ -496,4 +499,40 @@ void gotoxy(int x, int y)
     coord.X = x;
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void preOrder(Link root, int baris, int kolom, int bantu)
+{
+	if (root != NULL){
+		gotoxy(kolom, baris);
+		printf ("|%c|%d|", Info(root), Freq(root));
+        preOrder(LeftSon(root), baris+3, kolom-bantu, bantu/2);
+        preOrder(RightSon(root), baris+3, kolom+bantu, bantu/2);
+	}
+}
+
+void PrintTree (Link root, int i){
+	i = pow(2, maxDepth(root)) + 20;
+	
+	system ("cls");
+	preOrder(root, 3, i, i/2);
+	getche();
+	system ("cls");
+	preOrderlurus(root);
+	getche();
+}
+
+int maxDepth(Link node) {
+    if (node == NULL) {
+        return 0;
+    } else {
+        int leftDepth = maxDepth(LeftSon(node));
+        int rightDepth = maxDepth(RightSon(node));
+
+        if (leftDepth > rightDepth) {
+            return (leftDepth + 1);
+        } else {
+            return (rightDepth + 1);
+        }
+    }
 }

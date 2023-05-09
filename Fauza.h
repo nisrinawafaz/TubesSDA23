@@ -45,4 +45,10 @@ void InputFileKodeBarang (infotype KodeBarang, infotype BinaryKodeBarang);
 
 void gotoxy(int x, int y);
 
+void preOrder(Link root, int baris, int kolom, int bantu);
+
+void PrintTree (Link root, int i);
+
+int maxDepth(Link node);
+
 #endif
