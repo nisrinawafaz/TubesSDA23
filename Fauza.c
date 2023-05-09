@@ -533,3 +533,49 @@ int maxDepth(Link node) {
         }
     }
 }
+
+void TampilTabel (Link root, infotype barang)
+{
+	infotype temp = (infotype) malloc (20*sizeof(char));
+	infotype tempChar = (infotype) malloc (20*sizeof(char));
+	infotype binary = (infotype) malloc (20*sizeof(char));
+	int i = 0;
+	int j = 0;
+	int cek = 0;
+	
+	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
+	printf ("\t\t\t\t\t\t\t\t           HURUF\t==\t    KODE BINARY\t\t\n");
+	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
+	
+	tempChar[0] = barang[i];
+	strncat (temp, tempChar, 1);
+	i++;
+		
+	while (barang[i] != '\0'){
+		j = 0;
+		cek = 0;
+		while (temp[j] != '\0'){
+			if (barang[i] == temp[j]){
+				cek = 1;
+			}
+			j++;
+		}
+		if (cek == 0){
+			tempChar[0] = barang[i];
+			strncat (temp, tempChar, 1);
+		}
+		i++;
+	}
+	
+	i = 0;
+	
+	while (temp[i] != '\0'){
+		tempChar[0] = temp[i];
+		tempChar[1] = '\0';
+		binary = Incode (root, tempChar);
+		printf ("\t\t\t\t\t\t\t\t       \t%c\t==\t     %s\t\t\n", temp[i], binary);
+		printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
+		i++;
+	}
+	
+}

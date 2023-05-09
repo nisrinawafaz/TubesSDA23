@@ -51,4 +51,6 @@ void PrintTree (Link root, int i);
 
 int maxDepth(Link node);
 
+void TampilTabel (Link root, infotype barang);
+
 #endif
