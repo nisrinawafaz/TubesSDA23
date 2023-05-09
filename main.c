@@ -26,6 +26,7 @@ int main()
 	{
 		system("color 0F");
 		tampilanFile("TAMPILAN.txt");
+		sound("Suara/SiapakahAndaFix.wav");
 		selection(&role);
 		if(role == '1')
 		{

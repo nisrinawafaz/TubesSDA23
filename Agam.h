@@ -19,6 +19,7 @@ void tampilanFile(char* namaFile);
 void selamatDatang();
 void teksUserPelanggan();
 void teksAdmin();
+void sound(char* namaFile);
 
 
 #endif

@@ -103,6 +103,7 @@ void adminFitur(Link *root)
 	{
 		teksAdmin();
 		tampilanFile("TAMPILAN(1).txt");
+		sound("Suara/LoginAdminFix.wav");
 		inputLogin(&username, &password);
 		valid = loginAdmin(username,password);
 		if(valid)
@@ -110,6 +111,7 @@ void adminFitur(Link *root)
 			printf("login berhasil");
 			system("cls");
 			tampilanFile("TAMPILAN(4).txt");
+			sound("Suara/FiturAdminFix.wav");
 			do
 			{
 				selection(&fitur);
@@ -117,12 +119,14 @@ void adminFitur(Link *root)
 				{
 					system("cls");
 					tampilanFile("TAMPILAN(3).txt");
+					sound("Suara/InputBarangBaruFix.wav");
 					InputBarang(root);
 				}
 				else if(fitur == '2')
 				{
 					system("cls");
 					tampilanFile("TAMPILAN(5).txt");
+					sound("Suara/KasirMiniMarketFix.wav");
 					do
 					{
 						pemesanan(&front, &rear, *root);

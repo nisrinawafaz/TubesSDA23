@@ -184,6 +184,7 @@ void CekHarga ()
 	teksUserPelanggan();
 	
 	tampilanFile("TAMPILAN(2).txt");
+	sound("Suara/MasukkanKodeBarangFix.wav");
 	
 	do
 	{

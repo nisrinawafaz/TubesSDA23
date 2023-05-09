@@ -202,6 +202,7 @@ void tampilanKembalian(float Uangkembalian){
 	system("cls");
 	system("color 0F");
 	tampilanFile("TAMPILAN(6).txt");
+	sound("Suara/TerimakasihFix.wav");
 }
 
 void loadingBar(int waktu){
@@ -273,8 +274,8 @@ void selamatDatang(){
 	printf  ("\t\t               | $$\\  $ | $$  | $$  | $$\\  $$$  | $$        | $$\\  $ | $$| $$  | $$| $$  \\ $$| $$\\  $$ | $$         | $$                \n");
 	printf  ("\t\t               | $$ \\/  | $$ /$$$$$$| $$ \\  $$ /$$$$$$      | $$ \\/  | $$| $$  | $$| $$  | $$| $$ \\  $$| $$$$$$$$   | $$                \n");
 	printf  ("\t\t               |__/     |__/|______/|__/  \\__/|______/      |__/     |__/|__/  |__/|__/  |__/|__/  \\__/|________/   |__/                \n");
-	
-	loadingBar(150);
+	sound("Suara/SelamatDatangFix.wav");
+	loadingBar(100);
 }
 
 void teksUserPelanggan(){
@@ -290,6 +291,7 @@ void teksUserPelanggan(){
 	printf  ("\t         | $$  | $$ /$$  \\ $$| $$      | $$  \\ $$      | $$      | $$      | $$      | $$  | $$| $$\\  $$$| $$  \\ $$| $$  \\ $$| $$  | $$| $$\\  $$$\n");
 	printf  ("\t         |  $$$$$$/|  $$$$$$/| $$$$$$$$| $$  | $$      | $$      | $$$$$$$$| $$$$$$$$| $$  | $$| $$ \\  $$|  $$$$$$/|  $$$$$$/| $$  | $$| $$ \\  $$\n");
 	printf  ("\t          \\______/  \\______/ |________/|__/  |__/      |__/      |________/|________/|__/  |__/|__/  \\__/ \\______/  \\______/ |__/  |__/|__/  \\__/\n");
+	sound("Suara/UserPelangganFix.wav");
 	loadingBar(100);
 	system("cls");
 }
@@ -307,9 +309,14 @@ void teksAdmin(){
 	printf  ("\t\t\t\t\t\t\t  | $$  | $$| $$  | $$| $$\\  $ | $$  | $$  | $$\\  $$$\n");
 	printf  ("\t\t\t\t\t\t\t  | $$  | $$| $$$$$$$/| $$ \\/  | $$ /$$$$$$| $$ \\  $$\n");
 	printf  ("\t\t\t\t\t\t\t  |__/  |__/|_______/ |__/     |__/|______/|__/  \\__/\n");
+	sound("Suara/AdminFix.wav");
 	loadingBar(100);
 	system("cls");
 
 }
 
-
+void sound(char* namaFile){
+	
+	PlaySound(namaFile, NULL, SND_SYNC);
+	
+}
