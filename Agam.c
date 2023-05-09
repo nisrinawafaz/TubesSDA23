@@ -171,12 +171,6 @@ void InputBarang(Link *root){
 	{
 		adminFitur(root);
 	}
-	else
-	{
-			system("cls");
-		system("color 0F");
-		tampilanFile("TAMPILAN(6).txt");
-	}
 	
 }
 
@@ -199,11 +193,12 @@ float UangKembalian(float totalHarga, float *JumlahUang){
 
 void tampilanKembalian(float Uangkembalian){
 	printf("\t\t\t\t\t\t\t\t\t  Kembalian :                       Rp. %g \n",Uangkembalian);
-	system("cls");
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
 	puts	("\t\t\t\t\t\t\t\t\t|             TERIMA KASIH, SUDAH BERBELANJA                  |");
 	puts	("\t\t\t\t\t\t\t\t\t|              SELAMAT BERBELANJA KEMBALI :)                  |");
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
+	getche();
+	system("cls");
 }
 
 void loadingBar(int waktu){

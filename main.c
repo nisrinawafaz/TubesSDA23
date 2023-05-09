@@ -24,6 +24,7 @@ int main()
 //	loading("\tTUNGGU SEBENTAR...");
 	do
 	{
+		system("cls");
 		system("color 0F");
 		tampilanFile("TAMPILAN.txt");
 		sound("Suara/SiapakahAndaFix.wav");
