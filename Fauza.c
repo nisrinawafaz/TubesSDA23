@@ -516,10 +516,7 @@ void PrintTree (Link root, int i){
 	
 	system ("cls");
 	preOrder(root, 3, i, i/2);
-	getche();
-	system ("cls");
-	preOrderlurus(root);
-	getche();
+	gotoxy (0, (maxDepth(root) * 3) + 3);
 }
 
 int maxDepth(Link node) {
