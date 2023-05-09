@@ -80,9 +80,9 @@ void InputBarang(Link *root){
 		hargabinary = (infotype) malloc (50*sizeof(char));
 		stokbinary = (infotype) malloc (50*sizeof(char));
 	
-		barang = InputCodeChar("\nMasukkan Nama Barang:");
+		barang = InputCodeChar("\n\t\t\t\t\t\t\t\t  --> Masukkan Nama Barang: ");
 		barang = sensitiveCase(barang);
-		size = InputCodeChar("\nMasukkan Ukuran Barang:");
+		size = InputCodeChar("\n\t\t\t\t\t\t\t\t  --> Masukkan Ukuran Barang: ");
 		size = sensitiveCase(size);
 		if(SearchBarang("NamaBarang.txt", barang) && SearchSize("NamaBarang.txt", barang, size)){
 			FSearchBarang("NamaBarang.txt", &kode, barang, size, &harga, &stok);
@@ -127,8 +127,8 @@ void InputBarang(Link *root){
 			}
 			Replace(kode, harga, stok);
 		} else{
-			harga = InputCodeChar("Masukkan Harga Barang:");
-			stok = InputCodeChar("Masukkan Jumlah Stok Barang:");
+			harga = InputCodeChar("\n\t\t\t\t\t\t\t\t  --> Masukkan Harga Barang: ");
+			stok = InputCodeChar("\n\t\t\t\t\t\t\t\t  --> Masukkan Stok Barang: ");
 			
 			kode = BuatKodeBarang (barang);
 			
@@ -191,4 +191,113 @@ void tampilanKembalian(float Uangkembalian){
 	puts	("\t\t\t\t\t\t\t\t\t|              SELAMAT BERBELANJA KEMBALI :)                  |");
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
 }
+
+void loadingBar(int waktu){
+	int i;
+    char a = 177, b = 219;
+
+    printf("\n\n\n\t\t\t\t\t\t\t\t\t         Loading...\n\n");
+    printf("\t\t\t\t\t\t\t\t\t");
+  
+    for (i = 0; i < 26; i++){
+        printf("%c", a);
+  	}
+    printf("\r");
+    printf("\t\t\t\t\t\t\t\t\t");
+  
+    for (i = 0; i < 26; i++) {
+        printf("%c", b);
+        Sleep(waktu);
+    }
+}
+
+
+void tampilanFile(char* namaFile){
+	FILE *f_teks;
+	char string[256];
+	
+	if ((f_teks=fopen(namaFile, "rt")) == NULL)
+	{
+		printf("\n\n\t\t\t\t\t\t\t   ---> File Tidak Ada\n");
+		exit(1);
+	}
+
+	while ((fgets(string, 256, f_teks)) != NULL)
+	{
+		printf("%s\r", string);
+	}
+	fclose(f_teks); 
+	
+}
+
+void selamatDatang(){
+	
+	system("color 0A");
+	
+	printf  ("\n\n\n\n");
+	printf  ("\t        /$$$$$$  /$$$$$$$$ /$$        /$$$$$$  /$$      /$$  /$$$$$$  /$$$$$$$$       /$$$$$$$   /$$$$$$  /$$$$$$$$ /$$$$$$  /$$   /$$  /$$$$$$   \n");
+	printf  ("\t       /$$__  $$| $$_____/| $$       /$$__  $$| $$$    /$$$ /$$__  $$|__  $$__/      | $$__  $$ /$$__  $$|__  $$__//$$__  $$| $$$ | $$ /$$__  $$ \n");
+	printf  ("\t      | $$  \\__/| $$      | $$      | $$  \\ $$| $$$$  /$$$$| $$  \\ $$   | $$         | $$  \\ $$| $$  \\ $$   | $$  | $$  \\ $$| $$$$| $$| $$  \\__/ \n");
+	printf  ("\t      |  $$$$$$ | $$$$$   | $$      | $$$$$$$$| $$ $$/$$ $$| $$$$$$$$   | $$         | $$  | $$| $$$$$$$$   | $$  | $$$$$$$$| $$ $$ $$| $$ /$$$$ \n");
+	printf  ("\t       \\____  $$| $$__/   | $$      | $$__  $$| $$  $$$| $$| $$__  $$   | $$         | $$  | $$| $$__  $$   | $$  | $$__  $$| $$  $$$$| $$|_  $$ \n");
+	printf  ("\t       /$$  \\ $$| $$      | $$      | $$  | $$| $$\\  $ | $$| $$  | $$   | $$         | $$  | $$| $$  | $$   | $$  | $$  | $$| $$\\  $$$| $$  \\ $$ \n");  
+	printf  ("\t      |  $$$$$$/| $$$$$$$$| $$$$$$$$| $$  | $$| $$ \\/  | $$| $$  | $$   | $$         | $$$$$$$/| $$  | $$   | $$  | $$  | $$| $$ \\  $$|  $$$$$$/ \n");  
+	printf  ("\t       \\______/ |________/|________/|__/  |__/|__/     |__/|__/  |__/   |__/         |_______/ |__/  |__/   |__/  |__/  |__/|__/  \\__/ \\______/  \n"); 
+	printf  ("\n\n\n");
+	printf  ("\t\t\t\t\t      /$$$$$$$  /$$$$$$$$ /$$   /$$  /$$$$$$   /$$$$$$  /$$   /$$ /$$   /$$  /$$$$$$       \n");
+	printf  ("\t\t\t\t\t     | $$__  $$| $$_____/| $$$ | $$ /$$__  $$ /$$__  $$| $$  | $$| $$$ | $$ /$$__  $$     \n");
+	printf  ("\t\t\t\t\t     | $$  \\ $$| $$      | $$$$| $$| $$  \\__/| $$  \\__/| $$  | $$| $$$$| $$| $$  \\ $$ \n");
+	printf  ("\t\t\t\t\t     | $$$$$$$/| $$$$$   | $$ $$ $$| $$ /$$$$| $$ /$$$$| $$  | $$| $$ $$ $$| $$$$$$$$     \n");
+	printf  ("\t\t\t\t\t     | $$____/ | $$__/   | $$  $$$$| $$|_  $$| $$|_  $$| $$  | $$| $$  $$$$| $$__  $$     \n");
+	printf  ("\t\t\t\t\t     | $$      | $$      | $$\\  $$$| $$  \\ $$| $$  \\ $$| $$  | $$| $$\\  $$$| $$  | $$ \n");
+	printf  ("\t\t\t\t\t     | $$      | $$$$$$$$| $$ \\  $$|  $$$$$$/|  $$$$$$/|  $$$$$$/| $$ \\  $$| $$  | $$   \n");
+	printf  ("\t\t\t\t\t     |__/      |________/|__/  \\__/ \\______/  \\______/  \\______/ |__/  \\__/|__/  |__/\n");
+	printf  ("\n\n\n");
+	printf  ("\t\t                /$$      /$$ /$$$$$$ /$$   /$$ /$$$$$$       /$$      /$$  /$$$$$$  /$$$$$$$  /$$   /$$ /$$$$$$$$ /$$$$$$$$             \n");
+	printf  ("\t\t               | $$$    /$$$|_  $$_/| $$$ | $$|_  $$_/      | $$$    /$$$ /$$__  $$| $$__  $$| $$  /$$/| $$_____/|__  $$__/             \n");
+	printf  ("\t\t               | $$$$  /$$$$  | $$  | $$$$| $$  | $$        | $$$$  /$$$$| $$  \\ $$| $$  \\ $$| $$ /$$/ | $$         | $$                \n");
+	printf  ("\t\t               | $$ $$/$$ $$  | $$  | $$ $$ $$  | $$        | $$ $$/$$ $$| $$$$$$$$| $$$$$$$/| $$$$$/  | $$$$$      | $$                \n");
+	printf  ("\t\t               | $$  $$$| $$  | $$  | $$  $$$$  | $$        | $$  $$$| $$| $$__  $$| $$__  $$| $$  $$  | $$__/      | $$                \n");
+	printf  ("\t\t               | $$\\  $ | $$  | $$  | $$\\  $$$  | $$        | $$\\  $ | $$| $$  | $$| $$  \\ $$| $$\\  $$ | $$         | $$                \n");
+	printf  ("\t\t               | $$ \\/  | $$ /$$$$$$| $$ \\  $$ /$$$$$$      | $$ \\/  | $$| $$  | $$| $$  | $$| $$ \\  $$| $$$$$$$$   | $$                \n");
+	printf  ("\t\t               |__/     |__/|______/|__/  \\__/|______/      |__/     |__/|__/  |__/|__/  |__/|__/  \\__/|________/   |__/                \n");
+	
+	loadingBar(150);
+}
+
+void teksUserPelanggan(){
+	
+	system("cls");
+	system("color 0E");
+	printf  ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	printf  ("\t          /$$   /$$  /$$$$$$  /$$$$$$$$ /$$$$$$$        /$$$$$$$  /$$$$$$$$ /$$        /$$$$$$  /$$   /$$  /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$\n");
+	printf  ("\t         | $$  | $$ /$$__  $$| $$_____/| $$__  $$      | $$__  $$| $$_____/| $$       /$$__  $$| $$$ | $$ /$$__  $$ /$$__  $$ /$$__  $$| $$$ | $$\n");
+	printf  ("\t         | $$  | $$| $$  \\__/| $$      | $$  \\ $$      | $$  \\ $$| $$      | $$      | $$  \\ $$| $$$$| $$| $$  \\__/| $$  \\__/| $$  \\ $$| $$$$| $$\n");
+	printf  ("\t         | $$  | $$|  $$$$$$ | $$$$$   | $$$$$$$/      | $$$$$$$/| $$$$$   | $$      | $$$$$$$$| $$ $$ $$| $$ /$$$$| $$ /$$$$| $$$$$$$$| $$ $$ $$\n");
+	printf  ("\t         | $$  | $$ \\____  $$| $$__/   | $$__  $$      | $$____/ | $$__/   | $$      | $$__  $$| $$  $$$$| $$|_  $$| $$|_  $$| $$__  $$| $$  $$$$\n");
+	printf  ("\t         | $$  | $$ /$$  \\ $$| $$      | $$  \\ $$      | $$      | $$      | $$      | $$  | $$| $$\\  $$$| $$  \\ $$| $$  \\ $$| $$  | $$| $$\\  $$$\n");
+	printf  ("\t         |  $$$$$$/|  $$$$$$/| $$$$$$$$| $$  | $$      | $$      | $$$$$$$$| $$$$$$$$| $$  | $$| $$ \\  $$|  $$$$$$/|  $$$$$$/| $$  | $$| $$ \\  $$\n");
+	printf  ("\t          \\______/  \\______/ |________/|__/  |__/      |__/      |________/|________/|__/  |__/|__/  \\__/ \\______/  \\______/ |__/  |__/|__/  \\__/\n");
+	loadingBar(100);
+	system("cls");
+}
+
+void teksAdmin(){
+	system("cls");
+	system("color 0B");
+	
+	printf  ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	printf  ("\t\t\t\t\t\t\t    /$$$$$$  /$$$$$$$  /$$      /$$ /$$$$$$ /$$   /$$\n");
+	printf  ("\t\t\t\t\t\t\t   /$$__  $$| $$__  $$| $$$    /$$$|_  $$_/| $$$ | $$\n");
+	printf  ("\t\t\t\t\t\t\t  | $$  \\ $$| $$  \\ $$| $$$$  /$$$$  | $$  | $$$$| $$\n");
+	printf  ("\t\t\t\t\t\t\t  | $$$$$$$$| $$  | $$| $$ $$/$$ $$  | $$  | $$ $$ $$\n");
+	printf  ("\t\t\t\t\t\t\t  | $$__  $$| $$  | $$| $$  $$$| $$  | $$  | $$  $$$$\n");
+	printf  ("\t\t\t\t\t\t\t  | $$  | $$| $$  | $$| $$\\  $ | $$  | $$  | $$\\  $$$\n");
+	printf  ("\t\t\t\t\t\t\t  | $$  | $$| $$$$$$$/| $$ \\/  | $$ /$$$$$$| $$ \\  $$\n");
+	printf  ("\t\t\t\t\t\t\t  |__/  |__/|_______/ |__/     |__/|______/|__/  \\__/\n");
+	loadingBar(100);
+	system("cls");
+
+}
+
 

@@ -15,7 +15,7 @@ void selamat_datang();
 
 void loading(char x[100]);
 
-void selection(char *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan);
+void selection(char *choice);
 
 void inputLogin(infotype *username, infotype *password);
 

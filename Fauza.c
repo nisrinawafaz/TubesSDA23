@@ -180,9 +180,11 @@ void CekHarga ()
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
 			kodeChar = (infotype) malloc (50*sizeof(char));
+	teksUserPelanggan();
+	tampilanFile("TAMPILAN(2).txt");
 	do
 	{
-		binary = InputCodeBinary("\n--> Masukkan kode barang: ");
+		binary = InputCodeBinary("\n\n\t\t\t\t\t\t\t--> Masukkan kode yang tertera pada barang: ");
 		FSearchKodeChar("KodeBarang.txt", binary, &kodeChar);
 		if(kodeChar != Nil)
 		{
@@ -192,7 +194,7 @@ void CekHarga ()
 	    	printf ("\nHarga: %s", harga);
 	    	printf ("\nJumlah stok: %s", stok);	
 		} else{
-			printf ("\nKode barang yang anda inputkan salah");
+			printf ("\n\t\t\t\t\t\t\t --> Kode barang yang anda inputkan salah <--");
 		}
 	}while(kodeChar == Nil);
 	

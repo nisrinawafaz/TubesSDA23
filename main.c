@@ -1,6 +1,7 @@
 #include "header.h"
 #include "Fauza.h"
 #include "Nisrina.h"
+#include "Agam.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
@@ -18,12 +19,14 @@ int main()
 	KodeChar = Nil;
 	 
 	//market
-	//selamat_datang();
+	selamatDatang();
 	system("cls");
 //	loading("\tTUNGGU SEBENTAR...");
 	do
 	{
-		selection(&role, "user", "admin", "Siapakah Anda?", "saya adalah");
+		system("color 0F");
+		tampilanFile("TAMPILAN.txt");
+		selection(&role);
 		if(role == '1')
 		{
 			CekHarga ();

@@ -8,12 +8,17 @@
 #include <string.h>
 
 
-
 infotype InputCodeBinary(infotype deskripsi);
 infotype Decode(Link root, infotype str);
 void InputBarang(Link *root);
 infotype sensitiveCase(infotype kata);
 float UangKembalian(float totalHarga, float *JumlahUang);
 void tampilanKembalian(float Uangkembalian);
+void loadingBar(int waktu);
+void tampilanFile(char* namaFile);
+void selamatDatang();
+void teksUserPelanggan();
+void teksAdmin();
+
 
 #endif

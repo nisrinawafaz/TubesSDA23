@@ -58,22 +58,17 @@ void loading(char x[100])
 }
 
 
-void selection(char *choice, infotype fChoice, infotype sChoice, infotype pertanyaan, infotype kesimpulan)
+void selection(char *choice)
 {
-		system("cls");
-		printf("%s \n", pertanyaan);
-		printf("%s \n", fChoice);
-		printf("%s \n", sChoice);
-		printf("%s \n", kesimpulan);
-		*choice = getche();
+	printf("\n\n\n\t\t\t\t\t\t\t\t     --> Masukkan pilihan Anda: ");
+	*choice = getche();
 }
 
 void inputLogin(infotype *username, infotype *password)
 {
-	system("cls");
-	printf("\n masukkan Username : ");
+	printf("\n\n\t\t\t\t\t\t\t   --> Masukkan Username: ");
 	scanf("%s", *username);
-	printf("\n masukkan password : ");
+	printf("\n\n\t\t\t\t\t\t\t   --> Masukkan Password: ");
 	scanf("%s", *password);
 }
 
@@ -106,21 +101,28 @@ void adminFitur(Link *root)
 	
 	do
 	{
-		//inputLogin(&username, &password);
-		valid = 1;//loginAdmin(username,password);
+		teksAdmin();
+		tampilanFile("TAMPILAN(1).txt");
+		inputLogin(&username, &password);
+		valid = loginAdmin(username,password);
 		if(valid)
 		{
 			printf("login berhasil");
-			
+			system("cls");
+			tampilanFile("TAMPILAN(4).txt");
 			do
 			{
-				selection(&fitur, "Input Barang Baru", "Kasir", "Fitur admin : ", "saya akan menggunakan fitur : ");
+				selection(&fitur);
 				if(fitur == '1')
 				{
+					system("cls");
+					tampilanFile("TAMPILAN(3).txt");
 					InputBarang(root);
 				}
 				else if(fitur == '2')
 				{
+					system("cls");
+					tampilanFile("TAMPILAN(5).txt");
 					pemesanan(&front, &rear, *root);
 					system("cls");
 					PrintInfokeranjang (front);
@@ -181,7 +183,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 			
 			do
 			{
-				KodeBinaryKodeBarang = InputCodeBinary("\n masukkan kode yang tertera pada barang : ");
+				KodeBinaryKodeBarang = InputCodeBinary("\n\n\t\t\t\t\t\t--> Masukkan kode yang tertera pada barang: ");
 				FSearchKodeChar("KodeBarang.txt", KodeBinaryKodeBarang, &KodeCharKodeBarang);
 				if(KodeCharKodeBarang != Nil)
 				{
@@ -191,7 +193,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 						{
 							do
 							{
-								printf("\n masukkan kuantitas barang : ");
+								printf("\n\n\t\t\t\t\t\t\t\t  --> Masukkan Kuantitas Barang: ");
 								scanf("%d", &kuantitas);
 								if(kuantitas == 0 || kuantitas <0)
 								{
@@ -233,7 +235,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 							{
 								deleteKeranjang = SearchKeranjang (*front, KodeCharKodeBarang);
 								do{
-									printf("\n masukkan kuantitas barang : ");
+									printf("\n\n\t\t\t\t\t\t\t\t  --> Masukkan Kuantitas Barang: ");
 									scanf("%d", &kuantitas);
 								}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
 								FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
