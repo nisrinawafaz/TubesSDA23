@@ -543,30 +543,33 @@ void TampilTabel (Link root, infotype barang)
 	int i = 0;
 	int j = 0;
 	int cek = 0;
+	int k = 0;
 	
 	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
 	printf ("\t\t\t\t\t\t\t\t           HURUF\t==\t    KODE BINARY\t\t\n");
 	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
 	
-	tempChar[0] = barang[i];
-	strncat (temp, tempChar, 1);
+	temp[k] = barang[i];
 	i++;
+	k++;
 		
 	while (barang[i] != '\0'){
 		j = 0;
 		cek = 0;
-		while (temp[j] != '\0'){
+		while (temp[j] != '\0' && cek != 1){
 			if (barang[i] == temp[j]){
 				cek = 1;
 			}
 			j++;
 		}
 		if (cek == 0){
-			tempChar[0] = barang[i];
-			strncat (temp, tempChar, 1);
+			temp[k] = barang[i];
+			k++;
 		}
 		i++;
 	}
+	
+	temp[k] = '\0';
 	
 	i = 0;
 	
@@ -574,7 +577,7 @@ void TampilTabel (Link root, infotype barang)
 		tempChar[0] = temp[i];
 		tempChar[1] = '\0';
 		binary = Incode (root, tempChar);
-		printf ("\t\t\t\t\t\t\t\t       \t%c\t==\t     %s\t\t\n", temp[i], binary);
+		printf ("\t\t\t\t\t\t\t\t      \t     %c\t        ==\t     %s\t\t\n", temp[i], binary);
 		printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
 		i++;
 	}
