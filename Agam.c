@@ -152,7 +152,7 @@ void InputBarang(Link *root){
 			incodeBarang(&kodebinary, &barangbinary, &sizebinary, &hargabinary, &stokbinary,kode ,barang, size, harga, stok, *root);
 			InputFileKodeBarang (kode, kodebinary);
 			
-			TampilTabel(*root, barang, size, harga, stok);
+			TampilTabel(*root, barang);
 			
 			pf = fopen("BarangBinary.txt","a");
 			if (!pf){
