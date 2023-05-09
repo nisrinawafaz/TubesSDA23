@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <windows.h>
 #define Nil NULL
 #define Barang(Q) (Q)->nama_barang
 #define Harga(Q) (Q)->harga

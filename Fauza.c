@@ -191,7 +191,7 @@ void CekHarga ()
 			printf ("\nUkuran barang: %s", size);
 	    	printf ("\nHarga: %s", harga);
 	    	printf ("\nJumlah stok: %s", stok);	
-		}else{
+		} else{
 			printf ("\nKode barang yang anda inputkan salah");
 		}
 	}while(kodeChar == Nil);
@@ -486,4 +486,12 @@ void InputFileKodeBarang (infotype KodeBarang, infotype BinaryKodeBarang)
 	    fprintf (in,"%s\t%s\n", KodeBarang, BinaryKodeBarang);
 	    fclose(in);
     }
+}
+
+void gotoxy(int x, int y)
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }

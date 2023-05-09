@@ -43,4 +43,6 @@ infotype BuatKodeBarang (infotype NamaBarang);
 
 void InputFileKodeBarang (infotype KodeBarang, infotype BinaryKodeBarang);
 
+void gotoxy(int x, int y);
+
 #endif
