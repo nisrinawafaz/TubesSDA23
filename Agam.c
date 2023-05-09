@@ -149,9 +149,7 @@ void InputBarang(Link *root){
 			}
 			
 			*root = CreateHuffmanTree();
-			incodeBarang(&barangbinary, &sizebinary, &hargabinary, &stokbinary, barang, size, harga, stok, *root);
-			
-			kodebinary = Incode(*root, kode);
+			incodeBarang(&kodebinary, &barangbinary, &sizebinary, &hargabinary, &stokbinary,kode ,barang, size, harga, stok, *root);
 			InputFileKodeBarang (kode, kodebinary);
 			
 			printf ("\ncoba");
@@ -169,12 +167,12 @@ void InputBarang(Link *root){
 	}
 }
 
-double UangKembalian(double totalHarga, double *JumlahUang){
-	double UangKembali;
+float UangKembalian(float totalHarga, float *JumlahUang){
+	float UangKembali;
 	
 	do{
 		printf("\nMasukkan Jumlah Uang: ");
-		scanf("%lf", JumlahUang);
+		scanf("%f", JumlahUang);
 		
 		if(totalHarga > *JumlahUang){
 			printf("\nMaaf Uang Anda kurang");
@@ -186,7 +184,7 @@ double UangKembalian(double totalHarga, double *JumlahUang){
 	return UangKembali;
 }
 
-void tampilanKembalian(double Uangkembalian){
+void tampilanKembalian(float Uangkembalian){
 	printf	("\t\t\t\t\t\t\t\t\t  Kembalian :                       Rp. %g \n",Uangkembalian);
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
 	puts	("\t\t\t\t\t\t\t\t\t|             TERIMA KASIH, SUDAH BERBELANJA                  |");

@@ -31,9 +31,9 @@ typedef struct Keranjang{
 	infotype kode;
 	infotype nama_barang;
 	infotype size;
-	int harga;
+	float harga;
 	int kuantitas;
-	int total;
+	float total;
 	stroller next;
 } keranjang;
 

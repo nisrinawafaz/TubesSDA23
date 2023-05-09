@@ -81,15 +81,15 @@ void adminFitur(Link *root)
 {
 	bool valid;
 	char fitur;
-	double potongan = 0.07;
-	double ppn = 0.10;
+	float potongan = 0.07;
+	float ppn = 0.10;
 	int minimal = 100000;
-	int total ;
-	double diskon;
-	double pajak;
-	double total_akhir;
-	double uang_kembalian;
-	double uang_bayar;
+	float total ;
+	float diskon;
+	float pajak;
+	float total_akhir;
+	float uang_kembalian;
+	float uang_bayar;
 	uang_kembalian = 0;
 	infotype username;
 	username = (infotype)malloc(20*sizeof(char));
@@ -106,8 +106,8 @@ void adminFitur(Link *root)
 	
 	do
 	{
-		//inputLogin(&username, &password);
-		valid = 1;//loginAdmin(username,password);
+		inputLogin(&username, &password);
+		valid = loginAdmin(username,password);
 		if(valid)
 		{
 			printf("login berhasil");
@@ -161,9 +161,9 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 	infotype KodeCharHarga;
 	infotype KodeCharStok;
 	infotype KodeCharSize;
-	int harga;
+	float harga;
 	int kuantitas;
-	int total;
+	float total;
 	int stok;
 	infotype KodeBinaryKodeBarang;
 
@@ -274,12 +274,13 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 	
 }
 
-void input_struk(stroller data, int total, int minimal, double ppn, double diskon, double hasil, double uang_bayar, double uang_kembalian)
+void input_struk(stroller data, float total, float minimal, float ppn, float diskon, float hasil, float uang_bayar,float uang_kembalian)
 {
 	stroller P;
 	int i;
 	i = 1;
 	FILE *kj;
+	
 	kj=fopen("struk_belanja.txt", "a+");
 	if (data != Nil)
 	{
@@ -294,7 +295,7 @@ void input_struk(stroller data, int total, int minimal, double ppn, double disko
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 fprintf(kj, "  %d.\t   %s\t\t   %s\t\t      %d\t    %d\t     %d\t      \n", i, Barang(P), Size(P), Harga(P), Kuantitas(P), Total(P));
+				 fprintf(kj, "  %d.\t   %s\t\t   %s\t\t      %g\t    %d\t     %g\t      \n", i, Barang(P), Size(P), Harga(P), Kuantitas(P), Total(P));
 			fprintf(kj,"|-------------------------------------------------------------|\n");
 				 P = Next(P);
 				 i++;
@@ -304,7 +305,7 @@ void input_struk(stroller data, int total, int minimal, double ppn, double disko
 		if(total >= minimal)
 		{
 			fprintf(kj,"|---------------Selamat anda mendapatkan diskon!--------------|\n");
-			fprintf(kj,"  Jumlah pembelanjaan anda lebih dari %d\n",minimal);
+			fprintf(kj,"  Jumlah pembelanjaan anda lebih dari %g\n",minimal);
 			fprintf(kj,"  Jumlah pembayaran : Rp. %g ( Diskon sebesar Rp.%g) \n",hasil, diskon);
 			fprintf(kj,"|-------------------------------------------------------------|\n");
 			
@@ -321,7 +322,7 @@ void input_struk(stroller data, int total, int minimal, double ppn, double disko
 	fclose(kj);
 }
 
-stroller AlokasiKeranjang(infotype kode, infotype barang,infotype size,  int harga, int kuantitas, int total)
+stroller AlokasiKeranjang(infotype kode, infotype barang,infotype size,  float harga, int kuantitas, float total)
 {
 	 /* Kamus Lokal */
 	 stroller P;
@@ -382,7 +383,7 @@ void InsertLastKeranjang (stroller *front, stroller *rear, stroller P)
 	}
 }
 
-void InsVLastKeranjang(stroller *front, stroller *rear, infotype kode, infotype barang, infotype size, int harga, int kuantitas, int total)
+void InsVLastKeranjang(stroller *front, stroller *rear, infotype kode, infotype barang, infotype size, float harga, int kuantitas, float total)
 {
 	stroller P;
 	P = AlokasiKeranjang(kode, barang,size, harga, kuantitas, total);
@@ -426,7 +427,7 @@ void PrintInfokeranjang (stroller data)
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 printf (" \t\t\t\t\t\t\t\t\t  %d.\t   %s\t    %s\t     %d\t    %d\t     %d\t      \n ", i, Barang(P),Size(P), Harga(P), Kuantitas(P), Total(P));
+				 printf (" \t\t\t\t\t\t\t\t\t  %d.\t   %s\t    %s\t     %g\t    %d\t     %g\t      \n ", i, Barang(P),Size(P), Harga(P), Kuantitas(P), Total(P));
 				 puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");	
 				 P = Next(P);
 				 i++;
@@ -436,18 +437,13 @@ void PrintInfokeranjang (stroller data)
 }
 
 void DelKeranjang (stroller *front, infotype kode)
-/* IS : L sembarang */
-/* FS : Jika ada elemen list beraddress P, dengan Info(P) = X */
-/* 	Maka P dihapus dari list dan di dealokasi */
-/* Jika tidak ada elemen list dengan Info(P) = X, maka list tetap */
-/* List mungkin menjadi kosong karena penghapusan */
 {
-	 /* Kamus Lokal */
 	stroller P, Prec;
 	bool found=false;
 	int compare;
-	 /* Algoritma */
-		Prec = Nil;
+	
+	
+	Prec = Nil;
 	P = *front;
 	while ((P != Nil) && (!found))
 	{
@@ -463,11 +459,11 @@ void DelKeranjang (stroller *front, infotype kode)
 
 	if (found)
 	{
-		 if (Prec == Nil && Next(P) == Nil)		/* Hanya 1 elemen */
+		 if (Prec == Nil && Next(P) == Nil)		
 		 {	*front = Nil;	}
-		 else if (Prec == Nil)			/* Ketemu di elemen 1*/
+		 else if (Prec == Nil)			
 		 {	*front = Next(P);	}
-		 else		/* Ketemu di elemen list yang ditengah/akhir */
+		 else		
 		 {	Next(Prec) = Next(P);	}
 		 Next(P) = Nil;
 		 DeAlokasi (P);
@@ -475,9 +471,6 @@ void DelKeranjang (stroller *front, infotype kode)
 }
 
 void DeAlokasi (stroller P)
-/* IS : P terdefinisi */
-/* FS : P dikembalikan ke sistem */
-/* Melakukan dealokasi / pengembalian address P ke system */
 {
 	 if (P != Nil)
 	 {
@@ -510,17 +503,18 @@ void footer_struk()
 	fprintf(kj,"|=============================================================|\n");
 	fclose(kj);
 }
-double hitung_diskon(int total, double potongan)
+
+float hitung_diskon(float total, float potongan)
 {
-	double hitung;
+	float hitung;
 	hitung = total*potongan;
 	
 	return hitung;
 }
 
-double hitung_hasil(int total, double potongan, int minimal, double ppn)
+float hitung_hasil(float total, float potongan, float minimal, float ppn)
 {
-	double totalAkhir;
+	float totalAkhir;
 	if(total>= minimal )
 	{
 		totalAkhir = (total - potongan)  + ppn;
@@ -533,13 +527,13 @@ double hitung_hasil(int total, double potongan, int minimal, double ppn)
 	return totalAkhir;
 }
 
-void output_bayar(int total, int minimal, double ppn, double diskon, double hasil)
+void output_bayar(float total, float minimal, float ppn, float diskon, float hasil)
 {
 	printf	("\t\t\t\t\t\t\t\t\t   PPN 10 persen :                          Rp. %g\n", ppn);
 	if(total >= minimal)
 	{
 		puts	("\t\t\t\t\t\t\t\t\t|---------------Selamat anda mendapatkan diskon!--------------|");
-		printf	("\t\t\t\t\t\t\t\t\t  Jumlah pembelanjaan anda lebih dari %d\n",minimal);
+		printf	("\t\t\t\t\t\t\t\t\t  Jumlah pembelanjaan anda lebih dari %g\n",minimal);
 		printf	("\t\t\t\t\t\t\t\t\t  Jumlah pembayaran : Rp. %g ( Diskon sebesar Rp.%g) \n",hasil, diskon);
 		puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");
 		
@@ -551,10 +545,11 @@ void output_bayar(int total, int minimal, double ppn, double diskon, double hasi
 	}
 }
 
-int total_harga(stroller front)
+float total_harga(stroller front)
 {
 	stroller P;
-	int total;
+	float total;
+	
 	total =0;
 	if (front!= Nil)
 	{
@@ -576,9 +571,10 @@ int total_harga(stroller front)
 	return total;
 }
 
-double hitung_ppn(int total, double ppn)
+float hitung_ppn(float total, float ppn)
 {
-	double hitung;
+	float hitung;
+	
 	hitung = total*ppn;
 	
 	return hitung;
@@ -587,12 +583,12 @@ double hitung_ppn(int total, double ppn)
 //huffman tree modul
 address AlokasiChar(char X)
 {
-	 /* Kamus Lokal */
+	 
 	 address P;
 	 
-	 /* Algoritma */
+	
 	 P = (address) malloc (sizeof (Node));
-	 if (P != Nil)		/* Alokasi berhasil */
+	 if (P != Nil)	
 	 {
 		Prev(P) = Nil;
 		Info(P) = X;
@@ -603,15 +599,11 @@ address AlokasiChar(char X)
 }
 
 address Search (address front, char X)
-/* Mencari apakah ada elemen list dengan Info(P) = X */
-/* Jika ada, mengirimkan address elemen tsb. */
-/* Jika tidak ada, mengirimkan Nil */
-/* Menggunakan variabel bertype boolean */
 {
-	 /* Kamus Lokal */
+	 
 	 address P;
 	 bool found =  false;
-	 /* algoritma */
+	
 	 P = front;
 	 	while ((P != Nil) && (!found))
 		{
@@ -657,9 +649,6 @@ void InsVLastChar(address *front, address *rear, char X)
 }
 
 
-
-
-
 address createFrekuensi()
 {
 	FILE *in, *out;
@@ -701,8 +690,7 @@ address createFrekuensi()
     }
     while (!feof(in));
  
-    // print histogram data in the output file
-    fputs("character    frequency    ", out);
+    fputs("karakter    frekuensi    ", out);
     
     temp = front;
     
@@ -781,19 +769,19 @@ Link CreateHuffmanTree()
 	return root;
 }
 
-void  incodeBarang(infotype *barangbinary, infotype *sizebinary, infotype *hargabinary, infotype *stokbinary, infotype barang, infotype size, infotype harga, infotype stok, Link root)
+void  incodeBarang(infotype *kodebinary, infotype *barangbinary, infotype *sizebinary, infotype *hargabinary, infotype *stokbinary, infotype kode, infotype barang, infotype size, infotype harga, infotype stok, Link root)
 {
+	*kodebinary = Incode(root, kode);
 	*barangbinary = Incode(root, barang);
 	*sizebinary = Incode(root, size);
 	*hargabinary = Incode(root, harga);
 	*stokbinary = Incode(root, stok);
 }
 
-void PrintInfoChar (address data)
+void PrintFrekuensi (address data)
 {
 	 /* Kamus Lokal */
 	address P;
-	int i;
 	
 	 /* Algoritma */
 	if (data == Nil)
@@ -901,7 +889,9 @@ infotype Incode(Link root, infotype KodeChar)
 
 
 
-void FSearchBarang2(infotype NmFile, infotype kode, infotype *NmBarang, infotype *size, infotype *Harga, infotype *Stok){
+void FSearchBarang2(infotype NmFile, infotype kode, infotype *NmBarang, infotype *size, infotype *Harga, infotype *Stok)
+// search barang menggunakan kode yang sudah didapat
+{
 	FILE *in;
 	infotype KodeBarang;
 	
@@ -924,6 +914,7 @@ void FSearchBarang2(infotype NmFile, infotype kode, infotype *NmBarang, infotype
 }
 
 void FSearchKodeChar(infotype NmFile, infotype binary, infotype *kodeChar)
+//modul search kode di file kode barang
 {
 	FILE *in;
 	infotype Kbinary;
