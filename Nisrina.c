@@ -123,17 +123,25 @@ void adminFitur(Link *root)
 				{
 					system("cls");
 					tampilanFile("TAMPILAN(5).txt");
-					pemesanan(&front, &rear, *root);
-					system("cls");
-					PrintInfokeranjang (front);
-					total = total_harga(front);
-					diskon = hitung_diskon(total, potongan);
-					pajak = hitung_ppn(total, ppn);
-					total_akhir = hitung_hasil(total, potongan,  minimal,  pajak);
-					output_bayar(total, minimal, pajak, potongan, total_akhir);	
-					uang_kembalian = UangKembalian(total_akhir, &uang_bayar);
-					tampilanKembalian(uang_kembalian);
-					input_struk(front, total, minimal, pajak, potongan, total_akhir, uang_bayar, uang_kembalian);
+					do
+					{
+						pemesanan(&front, &rear, *root);
+						if(front == Nil)
+						{
+							printf("Anda belum memiliki barang di keranjang");
+						}
+					}while(front == Nil);
+						system("cls");
+						PrintInfokeranjang (front);
+						total = total_harga(front);
+						diskon = hitung_diskon(total, potongan);
+						pajak = hitung_ppn(total, ppn);
+						total_akhir = hitung_hasil(total, potongan,  minimal,  pajak);
+						output_bayar(total, minimal, pajak, potongan, total_akhir);	
+						uang_kembalian = UangKembalian(total_akhir, &uang_bayar);
+						tampilanKembalian(uang_kembalian);
+						input_struk(front, total, minimal, pajak, potongan, total_akhir, uang_bayar, uang_kembalian);
+					
 				}
 				else
 				{
@@ -214,7 +222,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 							sprintf(KodeCharStok, "%d", stok);
 							harga  = atoi(KodeCharHarga);
 							total = harga * kuantitas;
-							alamatBarang = SearchKeranjang (*front, KodeCharNama);
+							alamatBarang = SearchKeranjang (*front, KodeCharKodeBarang);
 							if(alamatBarang != Nil)
 							{
 								kuantitas = kuantitas + Kuantitas(alamatBarang);
@@ -225,36 +233,55 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 							{
 								InsVLastKeranjang(&(*front), &(*rear), KodeCharKodeBarang, KodeCharNama,KodeCharSize, harga, kuantitas, total);
 							}
-							sprintf(KodeCharHarga, "%d", harga);
 							sprintf(KodeCharStok, "%d", stok);
 							Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
 							PrintInfokeranjang (*front);
-							printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
-							nStep = getche();
-							if(nStep == 'H' || nStep == 'h')
-							{
-								deleteKeranjang = SearchKeranjang (*front, KodeCharKodeBarang);
-								do{
-									printf("\n\n\t\t\t\t\t\t\t\t  --> Masukkan Kuantitas Barang: ");
-									scanf("%d", &kuantitas);
-								}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
-								FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
-								sprintf(KodeCharStok, "%d", stok);
-								stok = atoi(KodeCharStok);
-								stok = stok + kuantitas;
-								Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
-								sprintf(KodeCharStok, "%d", stok);
-								printf("hai %s", KodeCharStok);
-								Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
-								if(Kuantitas(deleteKeranjang) == 0)
+							do{
+								printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
+								nStep = getche();
+								if(nStep == 'H' || nStep == 'h')
 								{
-									DelKeranjang (front, KodeCharKodeBarang);
+									do
+									{
+										KodeBinaryKodeBarang = InputCodeBinary("\n\n\t\t\t\t\t\t--> Masukkan kode yang tertera pada barang: ");
+										FSearchKodeChar("KodeBarang.txt", KodeBinaryKodeBarang, &KodeCharKodeBarang);
+										if(KodeCharKodeBarang != Nil)
+										{
+											deleteKeranjang = SearchKeranjang (*front, KodeCharKodeBarang);
+											if(deleteKeranjang != Nil)
+											{
+												do{
+												printf("\n\n\t\t\t\t\t\t\t\t  --> Masukkan Kuantitas Barang: ");
+												scanf("%d", &kuantitas);
+												}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
+												FSearchBarang2("NamaBarang.txt", KodeCharKodeBarang, &KodeCharNama, &KodeCharSize, &KodeCharHarga, &KodeCharStok);
+												sprintf(KodeCharStok, "%d", stok);
+												stok = atoi(KodeCharStok);
+												stok = stok + kuantitas;
+												Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
+												sprintf(KodeCharStok, "%d", stok);
+												printf("hai %s", KodeCharStok);
+												Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
+												if(Kuantitas(deleteKeranjang) == 0)
+												{
+													DelKeranjang (front, KodeCharKodeBarang);
+												}
+											}
+											else
+											{
+												printf("\n\n\t\t\t\t\t\t\t\t  Kode yang anda masukkan tidak ada dalam keranjang ");
+											}
+										}
+										else
+										{
+											printf("\n\n\t\t\t\t\t\t\t\t  Kode yang anda masukkan tidak ada dalam gudang data ");
+											deleteKeranjang = Nil;
+										}
+									}while(deleteKeranjang == Nil);
 								}
-								
-							}
+							}while((nStep == 'H' || nStep == 'h') && front == Nil);
 							printf("Ketikkan huruf 'T' untuk menambah barang : \n");
 							nStep = getche();
-							printf("hoii %c", nStep);
 							if(nStep != 'T' || nStep != 't')
 							{
 								break;
@@ -273,7 +300,6 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 				}
 			}while(KodeCharKodeBarang == Nil || stok == 0);
 		}while(nStep == 'T' || nStep == 't');
-	
 }
 
 void input_struk(stroller data, float total, float minimal, float ppn, float diskon, float hasil, float uang_bayar,float uang_kembalian)
@@ -349,23 +375,25 @@ stroller SearchKeranjang (stroller front, infotype kode)
 {
 	 /* Kamus Lokal */
 	 stroller P;
-	 bool found =  false;
 	 int match;
 	 P = front;
-	 	while ((P != Nil) && (!found))
+	 stroller X;
+	 X = Nil;
+	 
+	 	while (P != Nil)
 		{
 			match = strcmp(Kode(P), kode);
-			 if (match == 0)
-			 { 
-			 found = true; 	
-			 return P;
-			 }
+			if (match == 0){
+        		X = P;
+        		break;
+			}
 			else
-			{	
-			P = Next(P);
+			{
+				X = Nil;
+				P = Next(P);
 			}
 		}
-		return NULL;
+		return X;
 	
 }
 

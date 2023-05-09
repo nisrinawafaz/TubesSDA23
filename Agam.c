@@ -7,7 +7,7 @@ infotype InputCodeBinary(infotype deskripsi)
 {
 	infotype str;
 	
-	str = (infotype) malloc (10 * sizeof(char));
+	str = (infotype) malloc (30 * sizeof(char));
 	
 	printf("%s", deskripsi);
 	scanf("%s", str);
@@ -152,8 +152,7 @@ void InputBarang(Link *root){
 			incodeBarang(&kodebinary, &barangbinary, &sizebinary, &hargabinary, &stokbinary,kode ,barang, size, harga, stok, *root);
 			InputFileKodeBarang (kode, kodebinary);
 			
-			TampilTabel(*root, barang, size, harga, stok);
-			
+			printf ("\ncoba");
 			getche();
 			pf = fopen("BarangBinary.txt","a");
 			if (!pf){
@@ -166,6 +165,19 @@ void InputBarang(Link *root){
 		printf ("\n\nApakah anda ingin menginputkan barang lagi? (y/t)");
 		lagi = getche ();	
 	}
+	printf ("\n\nApakah anda ingin menggunakan fitur lainnya? (y/t)");
+	lagi = getche ();
+	if(lagi == 'y' || lagi== 'Y')
+	{
+		adminFitur(root);
+	}
+	else
+	{
+			system("cls");
+		system("color 0F");
+		tampilanFile("TAMPILAN(6).txt");
+	}
+	
 }
 
 float UangKembalian(float totalHarga, float *JumlahUang){
