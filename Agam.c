@@ -200,9 +200,10 @@ float UangKembalian(float totalHarga, float *JumlahUang){
 void tampilanKembalian(float Uangkembalian){
 	printf("\t\t\t\t\t\t\t\t\t  Kembalian :                       Rp. %g \n",Uangkembalian);
 	system("cls");
-	system("color 0F");
-	tampilanFile("TAMPILAN(6).txt");
-	sound("Suara/TerimakasihFix.wav");
+	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
+	puts	("\t\t\t\t\t\t\t\t\t|             TERIMA KASIH, SUDAH BERBELANJA                  |");
+	puts	("\t\t\t\t\t\t\t\t\t|              SELAMAT BERBELANJA KEMBALI :)                  |");
+	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
 }
 
 void loadingBar(int waktu){

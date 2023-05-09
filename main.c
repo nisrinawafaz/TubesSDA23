@@ -44,5 +44,9 @@ int main()
 		}
 	}while(role !='1' && role !='2');
 	
+	system("color 0F");
+	tampilanFile("TAMPILAN(6).txt");
+	sound("Suara/TerimakasihFix.wav");
+	
 	return 0;
 }
