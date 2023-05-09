@@ -16,6 +16,8 @@ int main()
 	KodeBinary = (infotype)malloc(30*sizeof(char));
 	
 	KodeChar = Nil;
+	
+	createFrekuensi();
 	 
 	//market
 	//selamat_datang();

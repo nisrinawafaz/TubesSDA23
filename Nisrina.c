@@ -689,6 +689,8 @@ address createFrekuensi()
 		}
     }
     while (!feof(in));
+    
+    PrintFrekuensi (front);
  
     fputs("karakter    frekuensi    ", out);
     
@@ -800,7 +802,9 @@ void PrintFrekuensi (address data)
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 printf (" %c : %d \n ", Info(P), Freq(P));
+				 printf ("| %c : %d |\n", Info(P), Freq(P));
+				 printf	("    |\n");
+				 printf	("    |\n");
 				 P = Next(P);
 			}
 		 }
