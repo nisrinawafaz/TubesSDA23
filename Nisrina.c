@@ -140,11 +140,11 @@ void adminFitur(Link *root)
 						total = total_harga(front);
 						diskon = hitung_diskon(total, potongan);
 						pajak = hitung_ppn(total, ppn);
-						total_akhir = hitung_hasil(total, potongan,  minimal,  pajak);
-						output_bayar(total, minimal, pajak, potongan, total_akhir);	
+						total_akhir = hitung_hasil(total, diskon,  minimal,  pajak);
+						output_bayar(total, minimal, pajak, diskon, total_akhir);	
 						uang_kembalian = UangKembalian(total_akhir, &uang_bayar);
 						tampilanKembalian(uang_kembalian);
-						input_struk(front, total, minimal, pajak, potongan, total_akhir, uang_bayar, uang_kembalian);
+						input_struk(front, total, minimal, pajak, diskon, total_akhir, uang_bayar, uang_kembalian);
 					
 				}
 				else
@@ -264,7 +264,6 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 												stok = stok + kuantitas;
 												Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
 												sprintf(KodeCharStok, "%d", stok);
-												printf("hai %s", KodeCharStok);
 												Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
 												if(Kuantitas(deleteKeranjang) == 0)
 												{
