@@ -20,6 +20,8 @@ void selamatDatang();
 void teksUserPelanggan();
 void teksAdmin();
 void sound(char* namaFile);
+void CekCode(Link root);
+int SearchKodeDecode(infotype binary);
 
 
 #endif

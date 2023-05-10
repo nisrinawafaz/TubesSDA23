@@ -19,6 +19,7 @@ int main()
 	KodeChar = Nil;
 	 
 	//market
+	ShowWindow(GetConsoleWindow(), SW_SHOWMAXIMIZED);
 	selamatDatang();
 	system("cls");
 //	loading("\tTUNGGU SEBENTAR...");

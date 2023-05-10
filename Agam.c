@@ -15,7 +15,8 @@ infotype InputCodeBinary(infotype deskripsi)
 	return str;
 }
 
-infotype Decode(Link root, infotype str){
+infotype Decode(Link root, infotype str)
+{
 	int i = 0;
 	Link pCur;
 	
@@ -47,7 +48,8 @@ infotype Decode(Link root, infotype str){
 	return kalimat;
 }
 
-infotype sensitiveCase(infotype kata){
+infotype sensitiveCase(infotype kata)
+{
 	int i;
 	
 	for (i = 0; kata[i]!='\0'; i++) {
@@ -59,7 +61,8 @@ infotype sensitiveCase(infotype kata){
 	return kata;
 }
 
-void InputBarang(Link *root){
+void InputBarang(Link *root)
+{
 	FILE *pf;
 	FILE *in;
 	infotype kode, barang, size, harga, stok, kodebinary, barangbinary, sizebinary, hargabinary, stokbinary, penampung;
@@ -174,7 +177,8 @@ void InputBarang(Link *root){
 	
 }
 
-float UangKembalian(float totalHarga, float *JumlahUang){
+float UangKembalian(float totalHarga, float *JumlahUang)
+{
 	float UangKembali;
 	
 	do{
@@ -191,7 +195,8 @@ float UangKembalian(float totalHarga, float *JumlahUang){
 	return UangKembali;
 }
 
-void tampilanKembalian(float Uangkembalian){
+void tampilanKembalian(float Uangkembalian)
+{
 	printf("\t\t\t\t\t\t\t\t\t  Kembalian :                       Rp. %g \n",Uangkembalian);
 	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
 	puts	("\t\t\t\t\t\t\t\t\t|             TERIMA KASIH, SUDAH BERBELANJA                  |");
@@ -201,7 +206,8 @@ void tampilanKembalian(float Uangkembalian){
 	system("cls");
 }
 
-void loadingBar(int waktu){
+void loadingBar(int waktu)
+{
 	int i;
     char a = 177, b = 219;
 
@@ -221,7 +227,8 @@ void loadingBar(int waktu){
 }
 
 
-void tampilanFile(char* namaFile){
+void tampilanFile(char* namaFile)
+{
 	FILE *f_teks;
 	char string[256];
 	
@@ -239,7 +246,8 @@ void tampilanFile(char* namaFile){
 	
 }
 
-void selamatDatang(){
+void selamatDatang()
+{
 	
 	system("color 0A");
 	
@@ -274,7 +282,8 @@ void selamatDatang(){
 	loadingBar(100);
 }
 
-void teksUserPelanggan(){
+void teksUserPelanggan()
+{
 	
 	system("cls");
 	system("color 0E");
@@ -292,7 +301,8 @@ void teksUserPelanggan(){
 	system("cls");
 }
 
-void teksAdmin(){
+void teksAdmin()
+{
 	system("cls");
 	system("color 0B");
 	
@@ -311,8 +321,59 @@ void teksAdmin(){
 
 }
 
-void sound(char* namaFile){
+void sound(char* namaFile)
+{
 	
 	PlaySound(namaFile, NULL, SND_SYNC);
 	
 }
+
+int SearchKodeDecode(infotype binary)
+{
+	FILE *in;
+	int compare;
+	infotype Kbinary;
+	Kbinary = (infotype) malloc (30*sizeof(char));
+	
+	in = fopen("KodeDecode.txt","r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(!feof(in)){
+        	fscanf(in,"%s", Kbinary);
+			fflush(stdin);
+			compare = strcmp(Kbinary, binary);
+        	if (compare == 0){
+        		return 1;
+			}
+       }
+       fclose(in);
+       return 0;
+    }
+}
+
+void CekCode(Link root)
+{
+	infotype KodeChar;
+	char lagi = 'y';
+	infotype KodeBinary;
+	
+	while (lagi == 'y' || lagi =='Y'){
+		KodeBinary = (infotype)malloc(30*sizeof(char));		
+		
+		KodeBinary = InputCodeBinary("\n\n\t\t\t\t\t\t\t\t--> Masukkan code binary untuk mengecek: ");
+		
+		if(SearchKodeDecode(KodeBinary) == 0){
+			printf("\n\t\t\t\t\t\t\t\t     --> Kode yang anda inputkan tidak ada pada tabel");
+		}else{
+			KodeChar = Decode(root, KodeBinary);
+			printf("\n\n\t\t\t\t\t\t\t\t     --> Kode yang anda inputkan adalah : %s", KodeChar);
+		}
+		printf ("\n\n\t\t\t\t\t\t\t\t --> Apakah anda ingin mengecek kode lagi? (y/t)");
+		lagi = getche ();
+	}	
+	
+
+}
+
+

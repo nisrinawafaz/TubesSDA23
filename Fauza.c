@@ -537,6 +537,7 @@ int maxDepth(Link node) {
 
 void TampilTabel (Link root, infotype barang)
 {
+	FILE *pf;
 	infotype temp = (infotype) malloc (20*sizeof(char));
 	infotype tempChar = (infotype) malloc (20*sizeof(char));
 	infotype binary = (infotype) malloc (20*sizeof(char));
@@ -544,7 +545,7 @@ void TampilTabel (Link root, infotype barang)
 	int j = 0;
 	int cek = 0;
 	int k = 0;
-	
+
 	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
 	printf ("\t\t\t\t\t\t\t\t           HURUF\t==\t    KODE BINARY\t\t\n");
 	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
@@ -573,13 +574,18 @@ void TampilTabel (Link root, infotype barang)
 	
 	i = 0;
 	
+	pf = fopen("KodeDecode.txt","w+");
 	while (temp[i] != '\0'){
 		tempChar[0] = temp[i];
 		tempChar[1] = '\0';
 		binary = Incode (root, tempChar);
 		printf ("\t\t\t\t\t\t\t\t      \t     %c\t        ==\t     %s\t\t\n", temp[i], binary);
 		printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
-		i++;
+		i++;		
+		fprintf(pf,"%s\n", binary);			
 	}
+	fclose(pf);	
+	
+	CekCode(root);
 	
 }

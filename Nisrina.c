@@ -827,6 +827,7 @@ void PrintFrekuensi (address data)
 	else	/* List memiliki elemen */
 	{
 		 P = data;
+		 printf	("-----------\n");
 		 for (;;)
 		 {
 			if (P == Nil)
@@ -837,12 +838,12 @@ void PrintFrekuensi (address data)
 			else	/* Belum berada di akhir List */
 			{
 				 printf ("| %c : %d |\n", Info(P), Freq(P));
-				 printf	("    |\n");
-				 printf	("    |\n");
+				 printf	("-----------\n");
 				 P = Next(P);
 			}
 		 }
 	}
+	getche();
 }
 
 infotype InputCodeChar(infotype deskripsi)
