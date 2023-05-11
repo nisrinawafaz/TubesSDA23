@@ -90,35 +90,35 @@ void InputBarang(Link *root)
 		if(SearchBarang("NamaBarang.txt", barang) && SearchSize("NamaBarang.txt", barang, size)){
 			FSearchBarang("NamaBarang.txt", &kode, barang, size, &harga, &stok);
 			
-			printf("\nBerikut adalah Harga, Size, dan Stok Barang %s:\n", barang);
-			printf("Size: %s, Harga: %s, Stok: %s\n", size, harga, stok);
+			printf("\n\t\t\t\t\t\t\t\t--> Berikut adalah Harga, Size, dan Stok Barang %s:\n", barang);
+			printf("\n\t\t\t\t\t\t\t\t  --> Size: %s, Harga: %s, Stok: %s\n", size, harga, stok);
 			
-			printf("Apakah anda ingin mengubah Harga? (Y/N)");
+			printf("\n\t\t\t\t\t\t\t\t  --> Apakah anda ingin mengubah Harga? (Y/N)");
 			fflush(stdin);
 			scanf("%c", &pilihan);
 			
 			if(pilihan == 'Y' || pilihan == 'y'){
-				harga = InputCodeChar("Masukkan Harga Barang Terbaru:");
+				harga = InputCodeChar("\n\t\t\t\t\t\t\t\t  --> Masukkan Harga Barang Terbaru:");
 				pf = fopen("panjang.txt","a");
 				if (!pf){
-					printf("\nFile tidak ditemukan");
+					printf("\n\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 				} else{
 					fprintf(pf,"%s", harga);
 					fclose(pf);
 				}
 			}
 			
-			printf("Apakah anda ingin menambah Stok? (Y/N)");
+			printf("\n\t\t\t\t\t\t\t\t  --> Apakah anda ingin menambah Stok? (Y/N)");
 			fflush(stdin);
 			scanf("%c", &pilihan1);
 			
 			if(pilihan1 == 'Y' || pilihan1 == 'y'){
 				stokbarang = atoi(stok);
-				stok = InputCodeChar("Masukkan Stok Barang yang ingin ditambahkan:");
+				stok = InputCodeChar("\n\t\t\t\t\t\t\t\t  --> Masukkan Stok Barang yang ingin ditambahkan:");
 				
 				pf = fopen("panjang.txt","a");
 				if (!pf){
-					printf("\nFile tidak ditemukan");
+					printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 				} else{
 					fprintf(pf,"%s", stok);
 					fclose(pf);
@@ -137,7 +137,7 @@ void InputBarang(Link *root)
 			
 			pf = fopen("NamaBarang.txt","a");
 			if (!pf){
-				printf("\nFile tidak ditemukan");
+				printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 			} else{
 				fprintf(pf,"%s\t%s\t%s\t%s\t%s\n", kode, barang, size, harga, stok);
 				fclose(pf);
@@ -145,7 +145,7 @@ void InputBarang(Link *root)
 			
 			pf = fopen("panjang.txt","a");
 			if (!pf){
-				printf("\nFile tidak ditemukan");
+				printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 			} else{
 				fprintf(pf,"%s%s%s%s%s", kode, barang, size, harga, stok);
 				fclose(pf);
@@ -159,16 +159,16 @@ void InputBarang(Link *root)
 			
 			pf = fopen("BarangBinary.txt","a");
 			if (!pf){
-				printf("\nFile tidak ditemukan");
+				printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 			} else{
 				fprintf(pf,"%s\t%s\t%s\t%s\n", kodebinary, barangbinary, sizebinary, hargabinary, stokbinary);
 				fclose(pf);
 			}
 		}
-		printf ("\n\nApakah anda ingin menginputkan barang lagi? (y/t)");
+		printf ("\n\n\t\t\t\t\t\t\t\t\t  --> Apakah anda ingin menginputkan barang lagi? (y/t)");
 		lagi = getche ();	
 	}
-	printf ("\n\nApakah anda ingin menggunakan fitur lainnya? (y/t)");
+	printf ("\n\n\t\t\t\t\t\t\t\t\t  --> Apakah anda ingin menggunakan fitur lainnya? (y/t)");
 	lagi = getche ();
 	if(lagi == 'y' || lagi== 'Y')
 	{
@@ -177,16 +177,16 @@ void InputBarang(Link *root)
 	
 }
 
-float UangKembalian(float totalHarga, float *JumlahUang)
+float UangKembalian(float totalHarga, float *JumlahUang) //karena menginputkan di dalam modul ini jadi menggunakan pointer
 {
 	float UangKembali;
 	
 	do{
-		printf("\nMasukkan Jumlah Uang: ");
+		printf("\n\t\t\t\t\t\t\t\t\t  --> Masukkan Jumlah Uang: ");
 		scanf("%f", JumlahUang);
 		
 		if(totalHarga > *JumlahUang){
-			printf("\nMaaf Uang Anda kurang");
+			printf("\n\t\t\t\t\t\t\t\t\t  --> Maaf Uang Anda kurang");
 		}	
 	}while(totalHarga > *JumlahUang);
 
@@ -337,7 +337,7 @@ int SearchKodeDecode(infotype binary)
 	
 	in = fopen("KodeDecode.txt","r");
     if(!in){  
-       printf("\nFile tidak ditemukan");
+       printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
     }else{
        while(!feof(in)){
         	fscanf(in,"%s", Kbinary);

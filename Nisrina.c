@@ -132,7 +132,7 @@ void adminFitur(Link *root)
 						pemesanan(&front, &rear, *root);
 						if(front == Nil)
 						{
-							printf("Anda belum memiliki barang di keranjang");
+							printf("\n\t\t\t\t\t\t\t\t  Anda belum memiliki barang di keranjang");
 						}
 					}while(front == Nil);
 						system("cls");
@@ -149,16 +149,16 @@ void adminFitur(Link *root)
 				}
 				else
 				{
-					printf("fitur yang anda pilih tidak tersedia\n");
-					printf("pilih fitur yang sudah tersedia [klik enter]");
+					printf("\n\t\t\t\t\t\t\t\t  --> Fitur yang anda pilih tidak tersedia\n");
+					printf("\n\t\t\t\t\t\t\t\t  --> Pilih fitur yang sudah tersedia [klik enter]");
 					getche();
 				}
 			}while(fitur !='1' && fitur !='2');
 		}
 		else
 		{
-			printf("login gagal");
-			printf("masukkan username dan password yang valid [klik enter]");
+			printf("\n\t\t\t\t\t\t\t\t\t  --> login gagal");
+			printf("\n\t\t\t\t\t\t\t\t  --> masukkan username dan password yang valid [klik enter]");
 			getche();
 		}	
 	}while(!valid);
@@ -209,14 +209,14 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 								scanf("%d", &kuantitas);
 								if(kuantitas == 0 || kuantitas <0)
 								{
-									printf("\n kuantitas tidak valid, masukkan kuantitas mulai dari 1");
-									printf("\n klik [enter]");
+									printf("\n\t\t\t\t\t\t\t  --> kuantitas tidak valid, masukkan kuantitas mulai dari 1");
+									printf("\n\t\t\t\t\t\t\t\t\t  --> klik [enter]");
 									getche();
 								}	
 								else if( kuantitas> stok)
 								{
-									printf("\n kuantitas tidak valid, stok hanya tersisa %d", stok);
-									printf("\n klik [enter]");
+									printf("\n\t\t\t\t\t\t\t  --> kuantitas tidak valid, stok hanya tersisa %d", stok);
+									printf("\n\t\t\t\t\t\t\t\t\t  -->  klik [enter]");
 									getche();
 								}
 							}while(kuantitas == 0 || kuantitas> stok || kuantitas <0);
@@ -241,7 +241,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 							Replace(KodeCharKodeBarang, KodeCharHarga, KodeCharStok);
 							PrintInfokeranjang (*front);
 							do{
-								printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
+								printf("\n\t\t\t\t\t\t\t\t  --> ketikkan huruf 'H' untuk menghapus barang :  \n");
 								nStep = getche();
 								if(nStep == 'H' || nStep == 'h')
 								{
@@ -283,7 +283,7 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 									}while(deleteKeranjang == Nil);
 								}
 							}while((nStep == 'H' || nStep == 'h') && front == Nil);
-							printf("Ketikkan huruf 'T' untuk menambah barang : \n");
+							printf("\n\t\t\t\t\t\t\t\t\t  --> Ketikkan huruf 'T' untuk menambah barang : \n");
 							nStep = getche();
 							if(nStep != 'T' || nStep != 't')
 							{
@@ -292,13 +292,13 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 						}
 						else
 						{
-							printf("\n Kode yang anda masukkan tidak valid karena stok habis : ");
-							printf("\n masukkan kode barang yang valid [klik enter] : ");
+							printf("\n\t\t\t\t\t\t\t\t\t  -->  Kode yang anda masukkan tidak valid karena stok habis : ");
+							printf("\n\t\t\t\t\t\t\t\t\t  -->  masukkan kode barang yang valid [klik enter] : ");
 							getche();
 						}
 				}else{
-					printf("\n Kode yang anda masukkan tidak valid : ");
-					printf("\n masukkan kode barang yang valid [klik enter] : ");
+					printf("\n\t\t\t\t\t\t\t\t\t  -->  Kode yang anda masukkan tidak valid : ");
+					printf("\n\t\t\t\t\t\t\t\t\t  -->  masukkan kode barang yang valid [klik enter] : ");
 					getche();
 				}
 			}while(KodeCharKodeBarang == Nil || stok == 0);
@@ -961,7 +961,7 @@ void FSearchKodeChar(infotype NmFile, infotype binary, infotype *kodeChar)
 	
 	in = fopen(NmFile,"r");
     if(!in){  
-       printf("\nFile tidak ditemukan");
+       printf("\n\t\t\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
     }else{
        while(!feof(in)){
         	fscanf(in,"%[^\t]\t%[^\n]\n", Kchar, Kbinary);

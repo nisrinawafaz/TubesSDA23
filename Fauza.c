@@ -193,10 +193,10 @@ void CekHarga ()
 		if(kodeChar != Nil)
 		{
 			FSearchBarang2("NamaBarang.txt", kodeChar, &nama, &size, &harga, &stok);
-			printf ("\nNama barang: %s", nama);
-			printf ("\nUkuran barang: %s", size);
-	    	printf ("\nHarga: %s", harga);
-	    	printf ("\nJumlah stok: %s", stok);	
+			printf ("\n\t\t\t\t\t\t\t\t\t\t  --> Nama barang: %s", nama);
+			printf ("\n\t\t\t\t\t\t\t\t\t\t  --> Ukuran barang: %s", size);
+	    	printf ("\n\t\t\t\t\t\t\t\t\t\t  --> Harga: %s", harga);
+	    	printf ("\n\t\t\t\t\t\t\t\t\t\t  --> Jumlah stok: %s", stok);	
 		} else{
 			printf ("\n\t\t\t\t\t\t\t --> Kode barang yang anda inputkan salah <--");
 		}
@@ -214,7 +214,7 @@ bool SearchBarang(infotype NmFile, infotype NmBarang)
     if(!in){  
        	in = fopen(NmFile,"a");
 	    if(!in){  
-	       printf("\nFile tidak ditemukan");
+	       printf("\n\t\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 	    }else{
 	       fclose(in);
 	    }
@@ -249,7 +249,7 @@ bool SearchSize (infotype NmFile, infotype NmBarang, infotype Size)
     if(!in){  
        	in = fopen(NmFile,"a");
 	    if(!in){  
-	       printf("\nFile tidak ditemukan");
+	       printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 	    }else{
 	       fclose(in);
 	    }
@@ -282,7 +282,7 @@ void FSearchBarang(infotype NmFile, infotype *kode, infotype NmBarang, infotype 
 	
 	in = fopen(NmFile,"r");
     if(!in){  
-       printf("\nFile tidak ditemukan");
+       printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
     }else{
        while(1){
 			*kode = (infotype) malloc (50*sizeof(char));
@@ -311,7 +311,7 @@ void Replace(infotype kodebrg, infotype hargabaru, infotype stokbaru)
 	
 	in = fopen("NamaBarang.txt","r");
     if(!in){  
-       printf("\nFile tidak ditemukan");
+       printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
     }else{
        while(!feof(in) && !ketemu){
 			kode = (infotype) malloc (50*sizeof(char));
@@ -331,7 +331,7 @@ void Replace(infotype kodebrg, infotype hargabaru, infotype stokbaru)
     temp = SearchNodeBrg(front, kodebrg);
     
     if (temp == NULL){
-    	printf ("Barang yang anda inputkan tidak ada");
+    	printf ("\n\t\t\t\t\t\t\t\t\t  --> Barang yang anda inputkan tidak ada");
 	} else {
 		Harga(temp) = hargabaru;
 		Stok(temp) = stokbaru;
@@ -339,7 +339,7 @@ void Replace(infotype kodebrg, infotype hargabaru, infotype stokbaru)
 	
 	in = fopen("NamaBarang.txt", "w");
 	if(!in){  
-       printf("\nFile tidak ditemukan");
+       printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
     }else{
        while(front != Nil && !ketemu){
         	fprintf(in,"%s\t%s\t%s\t%s\t%s\n", Kode(front), NamaBrg(front), Size(front), Harga(front), Stok(front));
@@ -445,7 +445,7 @@ infotype BuatKodeBarang (infotype NamaBarang)
     if(!in){  
         in = fopen("KodeBarang.txt","a");
 	    if(!in){  
-	       printf("\nFile tidak ditemukan");
+	       printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan");
 	    }else{
 	       fclose(in);
 	    }
@@ -487,7 +487,7 @@ void InputFileKodeBarang (infotype KodeBarang, infotype BinaryKodeBarang)
 	
 	in = fopen("KodeBarang.txt","a");
     if(!in){  
-        printf("\nFile tidak ditemukan, input tidak berhasil");
+        printf("\n\t\t\t\t\t\t\t\t\t  --> File tidak ditemukan, input tidak berhasil");
     }else{
 	    fprintf (in,"%s\t%s\n", KodeBarang, BinaryKodeBarang);
 	    fclose(in);
