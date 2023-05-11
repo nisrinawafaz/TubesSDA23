@@ -11,10 +11,6 @@
 //market modul
 bool loginAdmin(infotype username, infotype password);
 
-void selamat_datang();
-
-void loading(char x[100]);
-
 void selection(char *choice);
 
 void inputLogin(infotype *username, infotype *password);

@@ -25,39 +25,6 @@ bool loginAdmin(infotype username, infotype password)
 	}
 }
 
-void selamat_datang()
-{
-	puts	("\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t     SELAMAT DATANG DI PENGGUNA APLIKASI MINI MARKET");
-	puts	("\n\t\t\t\t\t\t\t\t\t\t\t     ^^BELANJA SENANG^^\n\n");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::::::::::::::::::::::::::::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       :::::::@@@@@@::::::::::@@@@@@:::::::");	
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::@@@@::::@@@@::::@@@@::::@@@@::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       :::@@@:::::::::@@::@@:::::::::@@@:::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::@@@::::::::::::@@::::::::::::@@@::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::@@@::::::::::::::::::::::@@@::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::@@@::::::::::::::::::@@@::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::::@@@::::::::::::::@@@::::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::::::@@@::::::::::@@@::::::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::::::::@@@::::::@@@::::::::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::::::::::@@@::@@@::::::::::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       :::::::::::::::::@@:::::::::::::::::");
-	puts	("\t\t\t\t\t\t\t\t\t\t       ::::::::::::::::::::::::::::::::::::");
-	getche();
-}
-
-void loading(char x[100])
-{										// ====>  Fitur tampilan loading  <==== //
-	int i;
-		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		printf("\t\t\t\t\t\t\t\t\t\t\t%s\n\n\t\t\t\t\t\t\t\t       ",x);
-	for (i=0; i<=65;i++){
-		printf("w",178);
-		Sleep(18);
-	}
-	system("cls");
-}
-
-
 void selection(char *choice)
 {
 	printf("\n\n\n\t\t\t\t\t\t\t\t     --> Masukkan pilihan Anda: ");
@@ -124,15 +91,18 @@ void adminFitur(Link *root)
 				}
 				else if(fitur == '2')
 				{
-					system("cls");
-					tampilanFile("TAMPILAN(5).txt");
-					sound("Suara/KasirMiniMarketFix.wav");
 					do
 					{
+						system("cls");
+						tampilanFile("TAMPILAN(5).txt");
+						sound("Suara/KasirMiniMarketFix.wav");
+					
 						pemesanan(&front, &rear, *root);
 						if(front == Nil)
 						{
 							printf("\n\t\t\t\t\t\t\t\t  Anda belum memiliki barang di keranjang");
+							printf("\n\t\t\t\t\t  --> [klik enter]");
+							getche();
 						}
 					}while(front == Nil);
 						system("cls");
