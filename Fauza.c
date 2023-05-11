@@ -513,7 +513,7 @@ void preOrder(Link root, int baris, int kolom, int bantu)
 }
 
 void PrintTree (Link root, int i){
-	i = pow(2, maxDepth(root)) + 20;
+	i = pow(2, maxDepth(root));
 	
 	system ("cls");
 	preOrder(root, 3, i, i/2);
