@@ -47,7 +47,7 @@ void gotoxy(int x, int y);
 
 void preOrder(Link root, int baris, int kolom, int bantu);
 
-void PrintTree (Link root, int i);
+void PrintTree (Link root);
 
 int maxDepth(Link node);
 

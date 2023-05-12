@@ -125,7 +125,6 @@ Link CreateTree (address1 front)
 {
 	Link parent, right, left;
 	address1 rear, P, pcur;
-	int i;
 	
 	rear = NULL;
 	rear = front;
@@ -146,7 +145,7 @@ Link CreateTree (address1 front)
 		Parent(left) = parent;
 		
 		if (rear == NULL){
-			PrintTree(parent, i);
+			PrintTree(parent);
 			return parent;
 		} else{
 			pcur = rear;
@@ -505,19 +504,30 @@ void gotoxy(int x, int y)
 void preOrder(Link root, int baris, int kolom, int bantu)
 {
 	if (root != NULL){
+		
 		gotoxy(kolom, baris);
+		
 		printf ("|%c|%d|", Info(root), Freq(root));
+		
         preOrder(LeftSon(root), baris+3, kolom-bantu, bantu/2);
         preOrder(RightSon(root), baris+3, kolom+bantu, bantu/2);
 	}
 }
 
-void PrintTree (Link root, int i){
-	i = pow(2, maxDepth(root));
+void PrintTree (Link root){
+	int i = 1;
+	int j = 3;
+	int bantu = 1;
 	
-	system ("cls");
-	preOrder(root, 3, i, i/2);
-	gotoxy (0, (maxDepth(root) * 3) + 3);
+	while (i < maxDepth(root)){
+		bantu = bantu + j;
+		j = j*2;
+		i = i+1;
+	}
+	
+	preOrder(root, 4, bantu, (bantu/2)+1);
+	
+	gotoxy(0, (i+1)*3+2);
 }
 
 int maxDepth(Link node) {
@@ -546,6 +556,9 @@ void TampilTabel (Link root, infotype barang)
 	int cek = 0;
 	int k = 0;
 
+
+	printf ("\n\n4. Proses encode dan decode\n");
+	printf ("Berikut adalah tabel yang berisi huruf serta kode huffmannya yang dapat digunakan untuk proses encode dan decode: \n");
 	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
 	printf ("\t\t\t\t\t\t\t\t           HURUF\t==\t    KODE BINARY\t\t\n");
 	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");

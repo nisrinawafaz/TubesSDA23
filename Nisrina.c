@@ -750,7 +750,7 @@ void sortingFreq(address *front)
             Pcur=Next(Pcur);
         }
     }
-	
+	PrintFrekuensi (*front);
 }
 
 Link CreateHuffmanTree()
@@ -764,11 +764,26 @@ Link CreateHuffmanTree()
 	address1 leafref;
 	leafref = Nil;
 	
+	getche();
+	system ("cls");
+	printf ("\n\n1. Menghitung frekuensi setiap huruf dalam kelompok kata yang terdapat pada file panjang.txt dan memasukkan data tersebut kedalam linked list\n");
+	printf ("Berikut adalah tabel hasil mengitung frekuensi huruf: \n");
 	front = createFrekuensi();
+	printf ("\n\nTekan enter untuk lanjut");
+	
+	getche();
+	system ("cls");
+	printf ("\n\n2. Mengurutkan linked list yang berisi huruf serta frekuensinya. Di-ururtkan dari huruf dengan frekuensi terbesar  \n");
+	printf ("Berikut adalah tabel hasil mengurutkan linked list: \n");
 	sortingFreq(&front);
-			
+	printf ("\n\nTekan enter untuk lanjut");
+	
 	leafref = CreateListOfLeaf(front);
-			
+	
+	getche();
+	system ("cls");
+	printf ("\n\n3. Membuat tree dari linked list yang sudah ter-urut\n");
+	printf ("Berikut adalah huffman tree yang terbentuk: \n");
 	root = CreateTree (leafref);
 	
 	return root;
@@ -796,7 +811,7 @@ void PrintFrekuensi (address data)
 	else	/* List memiliki elemen */
 	{
 		 P = data;
-		 printf	("-----------\n");
+		 printf	("\t\t-----------\n");
 		 for (;;)
 		 {
 			if (P == Nil)
@@ -806,13 +821,12 @@ void PrintFrekuensi (address data)
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 printf ("| %c : %d |\n", Info(P), Freq(P));
-				 printf	("-----------\n");
+				 printf ("\t\t| %c : %d |\n", Info(P), Freq(P));
+				 printf	("\t\t-----------\n");
 				 P = Next(P);
 			}
 		 }
 	}
-	getche();
 }
 
 infotype InputCodeChar(infotype deskripsi)
