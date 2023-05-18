@@ -545,12 +545,30 @@ int maxDepth(Link node) {
     }
 }
 
-void TampilTabel (Link root, infotype barang)
+void SearchIsiTree(Link nodetree, infotype *IsiTree)
+{
+	if(nodetree != Nil)
+	{
+		if(LeftSon(nodetree) == NULL && RightSon(nodetree) == NULL)
+		{
+			infotype temp;
+			temp = (infotype) malloc (2*sizeof(char));
+			
+			temp[0] = Info(nodetree);
+			temp[1] = '\0';
+			
+			strcat(*IsiTree, temp);
+		}
+		
+		SearchIsiTree(LeftSon(nodetree), &(*IsiTree));
+		SearchIsiTree(RightSon(nodetree), &(*IsiTree));
+	}
+}
+
+void TampilTabel (Link root)
 {
 	FILE *pf;
 	infotype temp = (infotype) malloc (20*sizeof(char));
-	infotype tempChar = (infotype) malloc (20*sizeof(char));
-	infotype binary = (infotype) malloc (20*sizeof(char));
 	int i = 0;
 	int j = 0;
 	int cek = 0;
@@ -559,46 +577,36 @@ void TampilTabel (Link root, infotype barang)
 
 	printf ("\n\n4. Proses encode dan decode\n");
 	printf ("Berikut adalah tabel yang berisi huruf serta kode huffmannya yang dapat digunakan untuk proses encode dan decode: \n");
-	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
-	printf ("\t\t\t\t\t\t\t\t           HURUF\t==\t    KODE BINARY\t\t\n");
-	printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
+	printf ("\t\t\t\t\t     ==================================================\n");
+	printf ("\t\t\t\t\t           HURUF\t==\t    KODE BINARY\t\t\n");
+	printf ("\t\t\t\t\t     ==================================================\n");
 	
-	temp[k] = barang[i];
-	i++;
-	k++;
-		
-	while (barang[i] != '\0'){
-		j = 0;
-		cek = 0;
-		while (temp[j] != '\0' && cek != 1){
-			if (barang[i] == temp[j]){
-				cek = 1;
-			}
-			j++;
-		}
-		if (cek == 0){
-			temp[k] = barang[i];
-			k++;
-		}
-		i++;
-	}
-	
-	temp[k] = '\0';
+	SearchIsiTree(root, &temp);
 	
 	i = 0;
 	
 	pf = fopen("KodeDecode.txt","w+");
-	while (temp[i] != '\0'){
-		tempChar[0] = temp[i];
-		tempChar[1] = '\0';
-		binary = Incode (root, tempChar);
-		printf ("\t\t\t\t\t\t\t\t      \t     %c\t        ==\t     %s\t\t\n", temp[i], binary);
-		printf ("\t\t\t\t\t\t\t\t     ==================================================\n");
-		i++;		
-		fprintf(pf,"%s\n", binary);			
+	if (!pf){
+		printf ("\n\t\t\t\t\t  --> File tidak ditemukan");
+	} else {
+		while (temp[i] != '\0'){
+			infotype tempChar = (infotype) malloc (2*sizeof(char));
+			infotype binary = (infotype) malloc (20*sizeof(char));
+			
+			tempChar[0] = temp[i];
+			tempChar[1] = '\0';
+			
+			binary = Incode (root, tempChar);
+			
+			fprintf(pf,"%s\n", binary);	
+			
+			printf ("\t\t\t\t\t      \t     %c\t        ==\t     %s\t\t\n", temp[i], binary);
+			printf ("\t\t\t\t\t     ==================================================\n");
+			
+			i++;		
+		}
+		fclose(pf);	
 	}
-	fclose(pf);	
 	
 	CekCode(root);
-	
 }

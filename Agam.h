@@ -1,7 +1,7 @@
 #ifndef Agam_H
 #define Agam_H
 
-#include "Fauza.h"
+#include "header.h"
 #include <ctype.h> 
 #include <stdlib.h>
 #include <stdio.h>

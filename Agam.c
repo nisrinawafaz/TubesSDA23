@@ -1,6 +1,6 @@
 #include "header.h"
-#include "Nisrina.h"
 #include "Fauza.h"
+#include "Nisrina.h"
 #include "Agam.h"
 
 infotype InputCodeBinary(infotype deskripsi)
@@ -154,11 +154,14 @@ void InputBarang(Link *root)
 			system("cls");
 			tampilanFile("TAMPILAN(7).txt");
 			printf ("\n\n\n\nTekan enter untuk lanjut");
+			
 			*root = CreateHuffmanTree();
+			
 			incodeBarang(&kodebinary, &barangbinary, &sizebinary, &hargabinary, &stokbinary,kode ,barang, size, harga, stok, *root);
+			
 			InputFileKodeBarang (kode, kodebinary);
 			
-			TampilTabel(*root, barang);
+			TampilTabel(*root);
 			
 			pf = fopen("BarangBinary.txt","a");
 			if (!pf){
@@ -367,15 +370,15 @@ void CekCode(Link root)
 	while (lagi == 'y' || lagi =='Y'){
 		KodeBinary = (infotype)malloc(30*sizeof(char));		
 		
-		KodeBinary = InputCodeBinary("\n\n\t\t\t\t\t\t\t\t     --> Masukkan code binary untuk mengecek: ");
+		KodeBinary = InputCodeBinary("\n\n\t\t\t\t\t     --> Masukkan code binary untuk mengecek: ");
 		
 		if(SearchKodeDecode(KodeBinary) == 0){
-			printf("\n\t\t\t\t\t\t\t\t     --> Kode yang anda inputkan tidak ada pada tabel");
+			printf("\n\t\t\t\t\t     --> Kode yang anda inputkan tidak ada pada tabel");
 		}else{
 			KodeChar = Decode(root, KodeBinary);
-			printf("\n\n\t\t\t\t\t\t\t\t     --> Kode yang anda inputkan adalah : %s", KodeChar);
+			printf("\n\n\t\t\t\t\t     --> Kode yang anda inputkan adalah : %s", KodeChar);
 		}
-		printf ("\n\n\t\t\t\t\t\t\t\t     --> Apakah anda ingin mengecek kode lagi? (y/t)");
+		printf ("\n\n\t\t\t\t\t     --> Apakah anda ingin mengecek kode lagi? (y/t)");
 		lagi = getche ();
 	}	
 	

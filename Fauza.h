@@ -51,6 +51,8 @@ void PrintTree (Link root);
 
 int maxDepth(Link node);
 
-void TampilTabel (Link root, infotype barang);
+void SearchIsiTree(Link nodetree, infotype *IsiTree);
+
+void TampilTabel (Link root);
 
 #endif
